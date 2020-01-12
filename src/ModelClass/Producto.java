@@ -8,10 +8,15 @@ package ModelClass;
 import Clases.PaintLabel;
 import Clases.RenderCelda;
 import Connection.Consult;
+import Models.Categorias;
+import Models.Departamentos;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -25,9 +30,10 @@ public class Producto extends Consult {
 
     private DefaultTableModel modelo1, modelo2;
     //private List<Clientes> cliente, clienteFilter;
-    private int idProducto;
+    private int idDpto;
     private String sql, precios, codeBarra;
     private Object[] object;
+    private DefaultComboBoxModel modelCombo;
 
     public void getProductos(JTable table) {
         String[] registros = new String[7];
@@ -129,5 +135,59 @@ public class Producto extends Consult {
             verificar = true;
         }
         return verificar;
+    }
+
+    public void getDepartamento(JComboBox combo1, JComboBox combo2, int idDptos) {
+        modelCombo = new DefaultComboBoxModel();
+        departamentos = departamentos();
+        if (0 < departamentos.size()) {
+            departamentos.forEach(item -> {
+                modelCombo.addElement(item);
+            });
+            combo1.setModel(modelCombo);
+            modelCombo = new DefaultComboBoxModel();
+            if (idDptos == 0) {
+                Departamentos dpt = (Departamentos) combo1.getSelectedItem();
+                idDpto = dpt.getIdDpto();
+            } else {
+                idDpto = idDptos;
+            }
+            categorias = categorias();
+            if (0 < categorias.size()) {
+                List<Categorias> categoria = categorias().stream()
+                        .filter(c -> c.getDpto_id() == idDpto)
+                        .collect(Collectors.toList());
+                categoria.forEach(item -> {
+                    modelCombo.addElement(item);
+                });
+                combo2.setModel(modelCombo);
+            }
+        }
+    }
+    
+    public void saveProducto(String producto, int cantidad, String precio,
+            String departamento, String categoria, String accion, int idProducto) {
+        int count = 0, cant;
+        switch (accion) {
+            case "insert":
+                double precio1 = formato.reconstruir(precio);
+                productos = productos().stream()
+                    .filter(p -> p.getProducto().equals(producto)
+                    && p.getPrecio().equals(formato.decimal(precio1) + "€"))
+                    .collect(Collectors.toList());
+                if (productos.isEmpty()) {
+                    sql = "INSERT INTO productos(codigo,producto,precio,descuento,"
+                            + "departamento,categoria) VALUES(?,?,?,?,?,?)";
+                    object = new Object[] {
+                        codeBarra,
+                        producto,
+                        formato.decimal(precio1) + "€",
+                        "0,00%",
+                        departamento,
+                        categoria
+                    };
+                }
+                break;
+        }
     }
 }

@@ -40,6 +40,11 @@ public class Categorias {
     public void setDpto_id(int dpto_id) {
         this.dpto_id = dpto_id;
     }
+
+    @Override
+    public String toString() {
+        return categoria;
+    }
     
     
 }

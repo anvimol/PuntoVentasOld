@@ -2917,8 +2917,8 @@
                                       <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                           <Component id="Label_CategoriaPDT" alignment="0" max="32767" attributes="0"/>
                                           <Component id="Label_DepartamentoPDT" alignment="0" pref="255" max="32767" attributes="0"/>
-                                          <Component id="ComboBox_Departamento" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="ComboBox_Categoria" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="ComboBox_DepartamentoPro" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="ComboBox_CategoriaPro" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace min="0" pref="16" max="32767" attributes="0"/>
@@ -2953,11 +2953,11 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="Label_DepartamentoPDT" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="ComboBox_Departamento" min="-2" max="-2" attributes="0"/>
+                          <Component id="ComboBox_DepartamentoPro" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="Label_CategoriaPDT" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="ComboBox_Categoria" min="-2" max="-2" attributes="0"/>
+                          <Component id="ComboBox_CategoriaPro" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="129" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="Button_GuardarPDT" alignment="1" min="-2" pref="39" max="-2" attributes="0"/>
@@ -3069,7 +3069,7 @@
                     <Property name="text" type="java.lang.String" value="Categoria"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="ComboBox_Departamento">
+                <Component class="javax.swing.JComboBox" name="ComboBox_DepartamentoPro">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="13" style="0"/>
@@ -3078,8 +3078,11 @@
                       <StringArray count="0"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ComboBox_DepartamentoProActionPerformed"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="ComboBox_Categoria">
+                <Component class="javax.swing.JComboBox" name="ComboBox_CategoriaPro">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="13" style="0"/>

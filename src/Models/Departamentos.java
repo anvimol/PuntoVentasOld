@@ -31,6 +31,11 @@ public class Departamentos {
     public void setDepartamento(String departamento) {
         this.departamento = departamento;
     }
+
+    @Override
+    public String toString() {
+        return departamento;
+    }
     
     
 }

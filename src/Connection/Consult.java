@@ -228,4 +228,14 @@ public class Consult extends Conexion {
         }
         return productos;
     }
+    
+    public List<Bodegas> bodegas() {
+        try {
+            bodega = (List<Bodegas>) QR.query(getConn(), "SELECT * FROM bodegas",
+                    new BeanListHandler(Bodegas.class));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex);
+        }
+        return bodega;
+    }
 }

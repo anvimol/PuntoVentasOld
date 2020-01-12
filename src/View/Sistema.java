@@ -39,6 +39,8 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private int pageSize = 2, tab, idProveeCompra, cantidad, numReg;
     private int num_registro = 0, numPagi = 0, idCliente, idRegistro, funcion;
     private int idProveedor, idDpto = 0, idCat = 0, idCompra = 0, idUsuario;
+    private Departamentos dpt;
+    private Categorias cat;
 
     /**
      * Creates new form Sistema
@@ -311,8 +313,8 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         Button_GuardarPDT = new javax.swing.JButton();
         Button_CancelarPDT = new javax.swing.JButton();
         Label_CategoriaPDT = new javax.swing.JLabel();
-        ComboBox_Departamento = new javax.swing.JComboBox();
-        ComboBox_Categoria = new javax.swing.JComboBox();
+        ComboBox_DepartamentoPro = new javax.swing.JComboBox();
+        ComboBox_CategoriaPro = new javax.swing.JComboBox();
         jPanel36 = new javax.swing.JPanel();
         LabelProductoImagenCod = new javax.swing.JLabel();
         LabelProductoCod = new javax.swing.JLabel();
@@ -2148,9 +2150,14 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         Label_CategoriaPDT.setForeground(new java.awt.Color(70, 106, 124));
         Label_CategoriaPDT.setText("Categoria");
 
-        ComboBox_Departamento.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        ComboBox_DepartamentoPro.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        ComboBox_DepartamentoPro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBox_DepartamentoProActionPerformed(evt);
+            }
+        });
 
-        ComboBox_Categoria.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        ComboBox_CategoriaPro.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
 
         jPanel36.setBackground(new java.awt.Color(255, 255, 255));
         jPanel36.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -2201,8 +2208,8 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
                             .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(Label_CategoriaPDT, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(Label_DepartamentoPDT, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
-                                .addComponent(ComboBox_Departamento, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(ComboBox_Categoria, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(ComboBox_DepartamentoPro, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ComboBox_CategoriaPro, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(0, 16, Short.MAX_VALUE))
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -2230,11 +2237,11 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
                 .addGap(18, 18, 18)
                 .addComponent(Label_DepartamentoPDT)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ComboBox_Departamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ComboBox_DepartamentoPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Label_CategoriaPDT)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ComboBox_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ComboBox_CategoriaPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Button_GuardarPDT, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -4974,6 +4981,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         idCompra = 0;
         funcion = 0;
         producto.getProductos(Table_ProductosCompras);
+        producto.getDepartamento(ComboBox_DepartamentoPro, ComboBox_CategoriaPro, 0);
     }
     
     private void datosTempoProductos() {
@@ -5034,7 +5042,38 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         evento.numberDecimalKeyPress(evt, TextField_PrecioVentaPDT);
     }//GEN-LAST:event_TextField_PrecioVentaPDTKeyTyped
 
+    private void ComboBox_DepartamentoProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBox_DepartamentoProActionPerformed
+        dpt = (Departamentos) ComboBox_DepartamentoPro.getSelectedItem();
+        producto.getDepartamento(ComboBox_DepartamentoPro, ComboBox_CategoriaPro, dpt.getIdDpto());
+    }//GEN-LAST:event_ComboBox_DepartamentoProActionPerformed
+
+    private void guardarProducto() {
+        if (validarDatosProductos()) {
+            String product = TextField_DescripcionPDT.getText();
+            String precio = TextField_PrecioVentaPDT.getText();
+            dpt = (Departamentos) ComboBox_DepartamentoPro.getSelectedItem();
+            String departa = dpt.getDepartamento();
+            cat = (Categorias) ComboBox_CategoriaPro.getSelectedItem();
+            String categ = cat.getCategoria();
+            
+            
+        }
+    }
     
+    private boolean validarDatosProductos() {
+        if (TextField_DescripcionPDT.getText().isEmpty()) {
+            Label_DescripcionPDT.setText("Ingrese la Descripción");
+            Label_DescripcionPDT.setForeground(Color.RED);
+            TextField_DescripcionPDT.requestFocus();
+            return false;
+        } else if (TextField_PrecioVentaPDT.getText().isEmpty()) {
+            Label_PrecioVentaProducto.setText("Ingrese el Precio de venta");
+            Label_PrecioVentaProducto.setForeground(Color.RED);
+            TextField_PrecioVentaPDT.requestFocus();
+            return false;
+        } 
+        return true;
+    }
     // </editor-fold> 
     /**
      * @param args the command line arguments
@@ -5118,8 +5157,8 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JButton Button_UltimoPRO;
     private javax.swing.JButton Button_Ventas;
     private javax.swing.JCheckBox CheckBoxCompraCredito;
-    private javax.swing.JComboBox ComboBox_Categoria;
-    private javax.swing.JComboBox ComboBox_Departamento;
+    private javax.swing.JComboBox ComboBox_CategoriaPro;
+    private javax.swing.JComboBox ComboBox_DepartamentoPro;
     private javax.swing.JLabel Label;
     private javax.swing.JLabel Label1;
     private javax.swing.JLabel LabelApeRecCliente;
