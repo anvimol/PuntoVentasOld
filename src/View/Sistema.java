@@ -36,7 +36,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private DefaultTableModel tablaModeloDpto, tablaModelCat;
     private String accion = "insert", IDProvee, proveedores, saldoProveedor;
     private String pago, deudaActual, role, usuario, precioCompra;
-    private int pageSize = 2, tab, idProveeCompra, cantidad, numReg;
+    private int pageSize = 2, tab, idProveeCompra, cantidad, numReg, idProducto;
     private int num_registro = 0, numPagi = 0, idCliente, idRegistro, funcion;
     private int idProveedor, idDpto = 0, idCat = 0, idCompra = 0, idUsuario;
     private Departamentos dpt;
@@ -310,12 +310,12 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         Label_PrecioVentaProducto = new javax.swing.JLabel();
         TextField_PrecioVentaPDT = new javax.swing.JTextField();
         Label_DepartamentoPDT = new javax.swing.JLabel();
-        Button_GuardarPDT = new javax.swing.JButton();
-        Button_CancelarPDT = new javax.swing.JButton();
+        Button_GuardarProducto = new javax.swing.JButton();
+        Button_CancelarProducto = new javax.swing.JButton();
         Label_CategoriaPDT = new javax.swing.JLabel();
         ComboBox_DepartamentoPro = new javax.swing.JComboBox();
         ComboBox_CategoriaPro = new javax.swing.JComboBox();
-        jPanel36 = new javax.swing.JPanel();
+        PanelCodeProducto = new javax.swing.JPanel();
         LabelProductoImagenCod = new javax.swing.JLabel();
         LabelProductoCod = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
@@ -326,20 +326,22 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
             }
         };
         Label1 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        TextFieldBuscarProductos = new javax.swing.JTextField();
         jPanel13 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        Table_BodegaPDT = Table_BodegaPDT = new javax.swing.JTable(){
+        Table_ProductosProd = Table_ProductosProd = new javax.swing.JTable(){
             public boolean isCellEditable(int rowIndex, int colIndex) {
                 return false; //Disallow the editing of any cell
             }
         };
         jLabel14 = new javax.swing.JLabel();
         Label = new javax.swing.JLabel();
-        Button_PrimeroPDT = new javax.swing.JButton();
-        Button_AnteriorPDT = new javax.swing.JButton();
-        Button_SiguientePDT = new javax.swing.JButton();
-        Button_UltimoPDT = new javax.swing.JButton();
-        Label_Paginas1 = new javax.swing.JLabel();
+        Button_PrimeroProducto = new javax.swing.JButton();
+        Button_AnteriorProducto = new javax.swing.JButton();
+        Button_SiguienteProducto = new javax.swing.JButton();
+        Button_UltimoProducto = new javax.swing.JButton();
+        Label_PaginasProductos = new javax.swing.JLabel();
         jPanel14 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -1563,6 +1565,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         jLabel33.setForeground(new java.awt.Color(70, 106, 124));
         jLabel33.setText("Buscar");
 
+        TextField_BuscarProveedor.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         TextField_BuscarProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 TextField_BuscarProveedorKeyReleased(evt);
@@ -2138,13 +2141,23 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         Label_DepartamentoPDT.setForeground(new java.awt.Color(70, 106, 124));
         Label_DepartamentoPDT.setText("Departamento");
 
-        Button_GuardarPDT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Agregar.png"))); // NOI18N
-        Button_GuardarPDT.setToolTipText("Guardar");
-        Button_GuardarPDT.setBorder(null);
+        Button_GuardarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Agregar.png"))); // NOI18N
+        Button_GuardarProducto.setToolTipText("Guardar");
+        Button_GuardarProducto.setBorder(null);
+        Button_GuardarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_GuardarProductoActionPerformed(evt);
+            }
+        });
 
-        Button_CancelarPDT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Cancelar.png"))); // NOI18N
-        Button_CancelarPDT.setToolTipText("Cancelar");
-        Button_CancelarPDT.setBorder(null);
+        Button_CancelarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Cancelar.png"))); // NOI18N
+        Button_CancelarProducto.setToolTipText("Cancelar");
+        Button_CancelarProducto.setBorder(null);
+        Button_CancelarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_CancelarProductoActionPerformed(evt);
+            }
+        });
 
         Label_CategoriaPDT.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         Label_CategoriaPDT.setForeground(new java.awt.Color(70, 106, 124));
@@ -2159,8 +2172,8 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
 
         ComboBox_CategoriaPro.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
 
-        jPanel36.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel36.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        PanelCodeProducto.setBackground(new java.awt.Color(255, 255, 255));
+        PanelCodeProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         LabelProductoImagenCod.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelProductoImagenCod.setToolTipText("");
@@ -2169,20 +2182,20 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         LabelProductoCod.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelProductoCod.setText("Producto");
 
-        javax.swing.GroupLayout jPanel36Layout = new javax.swing.GroupLayout(jPanel36);
-        jPanel36.setLayout(jPanel36Layout);
-        jPanel36Layout.setHorizontalGroup(
-            jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel36Layout.createSequentialGroup()
+        javax.swing.GroupLayout PanelCodeProductoLayout = new javax.swing.GroupLayout(PanelCodeProducto);
+        PanelCodeProducto.setLayout(PanelCodeProductoLayout);
+        PanelCodeProductoLayout.setHorizontalGroup(
+            PanelCodeProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelCodeProductoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PanelCodeProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(LabelProductoCod, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(LabelProductoImagenCod, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel36Layout.setVerticalGroup(
-            jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel36Layout.createSequentialGroup()
+        PanelCodeProductoLayout.setVerticalGroup(
+            PanelCodeProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelCodeProductoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(LabelProductoCod)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -2199,7 +2212,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Label_DescripcionPDT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Label_PrecioVentaProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel36, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PanelCodeProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(TextField_PrecioVentaPDT, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2213,9 +2226,9 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
                         .addGap(0, 16, Short.MAX_VALUE))
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(Button_GuardarPDT, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Button_GuardarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(Button_CancelarPDT, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Button_CancelarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(48, 48, 48)))
                 .addContainerGap())
         );
@@ -2225,7 +2238,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
                 .addContainerGap()
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel36, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PanelCodeProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(Label_DescripcionPDT)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2243,9 +2256,9 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ComboBox_CategoriaPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Button_GuardarPDT, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Button_CancelarPDT, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Button_GuardarProducto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Button_CancelarProducto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22))
         );
 
@@ -2282,6 +2295,17 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         Label1.setForeground(new java.awt.Color(70, 106, 124));
         Label1.setText("Productos comprados");
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(70, 106, 124));
+        jLabel6.setText("Buscar:");
+
+        TextFieldBuscarProductos.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        TextFieldBuscarProductos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TextFieldBuscarProductosKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
@@ -2291,7 +2315,11 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1164, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
             .addGroup(jPanel12Layout.createSequentialGroup()
-                .addGap(244, 244, 244)
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(TextFieldBuscarProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(90, 90, 90)
                 .addComponent(Label1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -2299,7 +2327,10 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Label1)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Label1)
+                    .addComponent(jLabel6)
+                    .addComponent(TextFieldBuscarProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -2308,7 +2339,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         jPanel13.setBackground(new java.awt.Color(255, 255, 255));
         jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        Table_BodegaPDT.setModel(new javax.swing.table.DefaultTableModel(
+        Table_ProductosProd.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -2319,9 +2350,19 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
 
             }
         ));
-        Table_BodegaPDT.setRowHeight(20);
-        Table_BodegaPDT.setSelectionBackground(new java.awt.Color(102, 204, 255));
-        jScrollPane5.setViewportView(Table_BodegaPDT);
+        Table_ProductosProd.setRowHeight(20);
+        Table_ProductosProd.setSelectionBackground(new java.awt.Color(102, 204, 255));
+        Table_ProductosProd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Table_ProductosProdMouseClicked(evt);
+            }
+        });
+        Table_ProductosProd.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                Table_ProductosProdKeyReleased(evt);
+            }
+        });
+        jScrollPane5.setViewportView(Table_ProductosProd);
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(70, 106, 124));
@@ -2331,21 +2372,41 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         Label.setForeground(new java.awt.Color(70, 106, 124));
         Label.setText("Productos");
 
-        Button_PrimeroPDT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Left-12.png"))); // NOI18N
-        Button_PrimeroPDT.setText("Primero");
+        Button_PrimeroProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Left-12.png"))); // NOI18N
+        Button_PrimeroProducto.setText("Primero");
+        Button_PrimeroProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_PrimeroProductoActionPerformed(evt);
+            }
+        });
 
-        Button_AnteriorPDT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Left.png"))); // NOI18N
-        Button_AnteriorPDT.setText("Anterior ");
+        Button_AnteriorProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Left.png"))); // NOI18N
+        Button_AnteriorProducto.setText("Anterior ");
+        Button_AnteriorProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_AnteriorProductoActionPerformed(evt);
+            }
+        });
 
-        Button_SiguientePDT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Right.png"))); // NOI18N
-        Button_SiguientePDT.setText("Siguiente");
+        Button_SiguienteProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Right.png"))); // NOI18N
+        Button_SiguienteProducto.setText("Siguiente");
+        Button_SiguienteProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_SiguienteProductoActionPerformed(evt);
+            }
+        });
 
-        Button_UltimoPDT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Right-12.png"))); // NOI18N
-        Button_UltimoPDT.setText("Ultimo");
+        Button_UltimoProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Right-12.png"))); // NOI18N
+        Button_UltimoProducto.setText("Ultimo");
+        Button_UltimoProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_UltimoProductoActionPerformed(evt);
+            }
+        });
 
-        Label_Paginas1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        Label_Paginas1.setForeground(new java.awt.Color(70, 106, 124));
-        Label_Paginas1.setText("Page");
+        Label_PaginasProductos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Label_PaginasProductos.setForeground(new java.awt.Color(70, 106, 124));
+        Label_PaginasProductos.setText("Page");
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -2365,16 +2426,16 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
                                         .addGap(175, 175, 175)
                                         .addComponent(jLabel14))
                                     .addGroup(jPanel13Layout.createSequentialGroup()
-                                        .addComponent(Button_PrimeroPDT, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(Button_PrimeroProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(Button_AnteriorPDT, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(Button_AnteriorProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(Button_SiguientePDT, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(Button_SiguienteProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(Button_UltimoPDT, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(Button_UltimoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel13Layout.createSequentialGroup()
                                         .addGap(208, 208, 208)
-                                        .addComponent(Label_Paginas1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(Label_PaginasProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addGap(250, 250, 250)
                                 .addComponent(Label)))
@@ -2389,13 +2450,13 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Label_Paginas1)
+                .addComponent(Label_PaginasProductos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Button_AnteriorPDT)
-                    .addComponent(Button_PrimeroPDT)
-                    .addComponent(Button_SiguientePDT)
-                    .addComponent(Button_UltimoPDT))
+                    .addComponent(Button_AnteriorProducto)
+                    .addComponent(Button_PrimeroProducto)
+                    .addComponent(Button_SiguienteProducto)
+                    .addComponent(Button_UltimoProducto))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel14)
                 .addContainerGap())
@@ -3239,21 +3300,23 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel18Layout.createSequentialGroup()
-                        .addGap(90, 90, 90)
-                        .addComponent(Button_PrimeroCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Button_AnteriorCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Button_SiguienteCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Button_UltimoCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel18Layout.createSequentialGroup()
+                                .addGap(90, 90, 90)
+                                .addComponent(Button_PrimeroCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Button_AnteriorCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Button_SiguienteCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Button_UltimoCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel18Layout.createSequentialGroup()
+                                .addGap(302, 302, 302)
+                                .addComponent(Label_PaginasCompra)))
+                        .addGap(0, 573, Short.MAX_VALUE))
                     .addGroup(jPanel18Layout.createSequentialGroup()
-                        .addGap(302, 302, 302)
-                        .addComponent(Label_PaginasCompra)))
-                .addContainerGap(583, Short.MAX_VALUE))
-            .addGroup(jPanel18Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane9)
+                        .addContainerGap()
+                        .addComponent(jScrollPane9)))
                 .addContainerGap())
         );
         jPanel18Layout.setVerticalGroup(
@@ -4947,7 +5010,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         compra.verificarPago(TextField_ComprasPagos, LabelCompraPago, CheckBoxCompraCredito,
                 LabelCompraDeuda, LabelCompraDeudaRecibo, LabelCompraSaldoRecibo, idProveeCompra);
     }//GEN-LAST:event_CheckBoxCompraCreditoStateChanged
-    
+
     private void restablecerProveedorCompras(int compras) {
         if (0 < compras) {
             imprimir.imprimirRecibo(PanelReciboCompra);
@@ -4959,7 +5022,6 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     }
 
     // </editor-fold> 
-    
     //<editor-fold defaultstate="collapsed" desc="CODIGO PRODUCTOS"> 
     private void Button_ProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_ProductosActionPerformed
         jTabbedPane1.setSelectedIndex(3);
@@ -4978,15 +5040,31 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     }//GEN-LAST:event_Button_ProductosActionPerformed
 
     private void restablecerProducto() {
+        tab = 4;
         idCompra = 0;
         funcion = 0;
-        producto.getProductos(Table_ProductosCompras);
-        producto.getDepartamento(ComboBox_DepartamentoPro, ComboBox_CategoriaPro, 0);
+        idProducto = 0;
+        accion = "insert";
+        TextField_DescripcionPDT.setText("");
+        TextField_PrecioVentaPDT.setText("");
+        Label_DescripcionPDT.setForeground(new Color(70, 106, 124));
+        Label_PrecioVentaProducto.setForeground(new Color(70, 106, 124));
+        producto.getProductos(Table_ProductosCompras, "");
+        producto.getDepartamento(ComboBox_DepartamentoPro, "");
+        dpt = (Departamentos) ComboBox_DepartamentoPro.getSelectedItem();
+        producto.getCategorias(ComboBox_DepartamentoPro, ComboBox_CategoriaPro,
+                dpt.getIdDpto(), "");
+        producto.codeBarra(LabelProductoImagenCod, "0000000000000",
+                TextField_DescripcionPDT.getText(), TextField_PrecioVentaPDT.getText());
+        new Paginador(tab, Table_ProductosProd, Label_PaginasProductos, 1);
+        producto.searchProductos(Table_ProductosProd, TextField_DescripcionPDT.getText(),
+                num_registro, pageSize);
     }
-    
+
     private void datosTempoProductos() {
         String product;
         funcion = 1;
+        accion = "insert";
         int fila = Table_ProductosCompras.getSelectedRow();
         idCompra = Integer.valueOf((String) producto.getModelo().getValueAt(fila, 0));
         product = (String) producto.getModelo().getValueAt(fila, 1);
@@ -4997,9 +5075,9 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         Label_DescripcionPDT.setText("Descripción");
         Label_DescripcionPDT.setForeground(new Color(0, 153, 51));
         producto.codeBarra(LabelProductoImagenCod, "0", product, TextField_PrecioVentaPDT.getText());
-        //TextField_PrecioVentaPDT.setText();
-    } 
-    
+        producto.searchProductos(Table_ProductosProd, product, num_registro, pageSize);
+    }
+
     private void Table_ProductosComprasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Table_ProductosComprasKeyReleased
         if (Table_ProductosCompras.getSelectedRows().length > 0) {
             datosTempoProductos();
@@ -5019,7 +5097,13 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         } else {
             Label_DescripcionPDT.setText("Descripcion");
             Label_DescripcionPDT.setForeground(new Color(0, 153, 51));
+            if (funcion == 1) {
+                producto.codeBarra(LabelProductoImagenCod, "0", TextField_DescripcionPDT.getText(),
+                        TextField_PrecioVentaPDT.getText());
+            }
         }
+        producto.searchProductos(Table_ProductosProd, TextField_DescripcionPDT.getText(),
+                num_registro, pageSize);
     }//GEN-LAST:event_TextField_DescripcionPDTKeyReleased
 
     private void TextField_PrecioVentaPDTKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextField_PrecioVentaPDTKeyReleased
@@ -5030,22 +5114,13 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
             Label_PrecioVentaProducto.setText("Precio venta");
             Label_PrecioVentaProducto.setForeground(new Color(0, 153, 51));
             if (funcion == 1 && precioCompra != null) {
-                producto.codeBarra(LabelProductoImagenCod, "0", TextField_DescripcionPDT.getText(), 
+                producto.codeBarra(LabelProductoImagenCod, "0", TextField_DescripcionPDT.getText(),
                         TextField_PrecioVentaPDT.getText());
-                producto.verificarPrecioVenta(Label_PrecioVentaProducto, 
+                producto.verificarPrecioVenta(Label_PrecioVentaProducto,
                         TextField_PrecioVentaPDT.getText(), precioCompra, funcion);
             }
         }
     }//GEN-LAST:event_TextField_PrecioVentaPDTKeyReleased
-
-    private void TextField_PrecioVentaPDTKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextField_PrecioVentaPDTKeyTyped
-        evento.numberDecimalKeyPress(evt, TextField_PrecioVentaPDT);
-    }//GEN-LAST:event_TextField_PrecioVentaPDTKeyTyped
-
-    private void ComboBox_DepartamentoProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBox_DepartamentoProActionPerformed
-        dpt = (Departamentos) ComboBox_DepartamentoPro.getSelectedItem();
-        producto.getDepartamento(ComboBox_DepartamentoPro, ComboBox_CategoriaPro, dpt.getIdDpto());
-    }//GEN-LAST:event_ComboBox_DepartamentoProActionPerformed
 
     private void guardarProducto() {
         if (validarDatosProductos()) {
@@ -5055,11 +5130,35 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
             String departa = dpt.getDepartamento();
             cat = (Categorias) ComboBox_CategoriaPro.getSelectedItem();
             String categ = cat.getCategoria();
-            
-            
+            boolean verificar = producto.verificarPrecioVenta(Label_PrecioVentaProducto,
+                    TextField_PrecioVentaPDT.getText(), precioCompra, funcion);
+
+            switch (accion) {
+                case "insert":
+                    if (funcion == 1) {
+                        if (verificar) {
+                            producto.saveProducto(product, cantidad, precio,
+                                    departa, categ, accion, idCompra);
+                            imprimir.imprimirRecibo(PanelCodeProducto);
+                            restablecerProducto();
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Seleccione un producto");
+                    }
+                    break;
+                case "update":
+                    if (funcion == 2) {
+                        producto.saveProducto(product, cantidad, precio,
+                                departa, categ, accion, idProducto);
+                        restablecerProducto();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Seleccione un producto");
+                    }
+                    break;
+            }
         }
     }
-    
+
     private boolean validarDatosProductos() {
         if (TextField_DescripcionPDT.getText().isEmpty()) {
             Label_DescripcionPDT.setText("Ingrese la Descripción");
@@ -5071,9 +5170,84 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
             Label_PrecioVentaProducto.setForeground(Color.RED);
             TextField_PrecioVentaPDT.requestFocus();
             return false;
-        } 
+        }
         return true;
     }
+
+    private void datosProductos() {
+        String product, codigo, precio, departamento, categoria;
+        funcion = 2;
+        accion = "update";
+        int fila = Table_ProductosProd.getSelectedRow();
+        idProducto = Integer.valueOf((String) producto.getModelo2().getValueAt(fila, 0));
+        codigo = (String) producto.getModelo2().getValueAt(fila, 1);
+        product = (String) producto.getModelo2().getValueAt(fila, 2);
+        precio = (String) producto.getModelo2().getValueAt(fila, 3);
+        departamento = (String) producto.getModelo2().getValueAt(fila, 5);
+        categoria = (String) producto.getModelo2().getValueAt(fila, 6);
+        TextField_DescripcionPDT.setText(product);
+        TextField_PrecioVentaPDT.setText(precio.replace("€", ""));
+        Label_DescripcionPDT.setForeground(new Color(0, 153, 51));
+        Label_PrecioVentaProducto.setForeground(new Color(0, 153, 51));
+        dpt = producto.getDepartamento(ComboBox_DepartamentoPro, departamento);
+        ComboBox_DepartamentoPro.setSelectedItem(dpt);
+        cat = producto.getCategorias(ComboBox_DepartamentoPro, ComboBox_CategoriaPro,
+                dpt.getIdDpto(), categoria);
+        ComboBox_CategoriaPro.setSelectedItem(cat);
+        producto.codeBarra(LabelProductoImagenCod, codigo, product,
+                TextField_PrecioVentaPDT.getText());
+    }
+
+    private void TextField_PrecioVentaPDTKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextField_PrecioVentaPDTKeyTyped
+        evento.numberDecimalKeyPress(evt, TextField_PrecioVentaPDT);
+    }//GEN-LAST:event_TextField_PrecioVentaPDTKeyTyped
+
+    private void ComboBox_DepartamentoProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBox_DepartamentoProActionPerformed
+        dpt = (Departamentos) ComboBox_DepartamentoPro.getSelectedItem();
+        producto.getCategorias(ComboBox_DepartamentoPro, ComboBox_CategoriaPro,
+                dpt.getIdDpto(), "");
+    }//GEN-LAST:event_ComboBox_DepartamentoProActionPerformed
+
+    private void Button_GuardarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_GuardarProductoActionPerformed
+        guardarProducto();
+    }//GEN-LAST:event_Button_GuardarProductoActionPerformed
+
+    private void TextFieldBuscarProductosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextFieldBuscarProductosKeyReleased
+        producto.getProductos(Table_ProductosCompras, TextFieldBuscarProductos.getText());
+    }//GEN-LAST:event_TextFieldBuscarProductosKeyReleased
+
+    private void Table_ProductosProdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Table_ProductosProdKeyReleased
+        if (Table_ProductosProd.getSelectedRows().length > 0) {
+            datosProductos();
+        }
+    }//GEN-LAST:event_Table_ProductosProdKeyReleased
+
+    private void Table_ProductosProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_ProductosProdMouseClicked
+        if (Table_ProductosProd.getSelectedRows().length > 0) {
+            datosProductos();
+        }
+    }//GEN-LAST:event_Table_ProductosProdMouseClicked
+
+    private void Button_CancelarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_CancelarProductoActionPerformed
+        restablecerProducto();
+    }//GEN-LAST:event_Button_CancelarProductoActionPerformed
+
+    private void Button_PrimeroProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_PrimeroProductoActionPerformed
+        new Paginador(tab, Table_ProductosProd, Label_PaginasProductos, 0).primero();
+    }//GEN-LAST:event_Button_PrimeroProductoActionPerformed
+
+    private void Button_AnteriorProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_AnteriorProductoActionPerformed
+        new Paginador(tab, Table_ProductosProd, Label_PaginasProductos, 1).anterior();
+    }//GEN-LAST:event_Button_AnteriorProductoActionPerformed
+
+    private void Button_SiguienteProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_SiguienteProductoActionPerformed
+        new Paginador(tab, Table_ProductosProd, Label_PaginasProductos, 1).siguiente();
+    }//GEN-LAST:event_Button_SiguienteProductoActionPerformed
+
+    private void Button_UltimoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_UltimoProductoActionPerformed
+        new Paginador(tab, Table_ProductosProd, Label_PaginasProductos, 1).ultimo();
+    }//GEN-LAST:event_Button_UltimoProductoActionPerformed
+
     // </editor-fold> 
     /**
      * @param args the command line arguments
@@ -5116,13 +5290,13 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JButton Button_AnteriorCLT;
     private javax.swing.JButton Button_AnteriorCLT1;
     private javax.swing.JButton Button_AnteriorCompras;
-    private javax.swing.JButton Button_AnteriorPDT;
     private javax.swing.JButton Button_AnteriorPRO;
+    private javax.swing.JButton Button_AnteriorProducto;
     private javax.swing.JButton Button_CancelarCLT;
     private javax.swing.JButton Button_CancelarCLT1;
     private javax.swing.JButton Button_CancelarCatDpt;
     private javax.swing.JButton Button_CancelarCompras;
-    private javax.swing.JButton Button_CancelarPDT;
+    private javax.swing.JButton Button_CancelarProducto;
     private javax.swing.JButton Button_CancelarProv;
     private javax.swing.JButton Button_Cat_Dpt;
     private javax.swing.JButton Button_Cliente;
@@ -5136,25 +5310,25 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JButton Button_GuardarCliente;
     private javax.swing.JButton Button_GuardarCliente2;
     private javax.swing.JButton Button_GuardarCompras;
-    private javax.swing.JButton Button_GuardarPDT;
+    private javax.swing.JButton Button_GuardarProducto;
     private javax.swing.JButton Button_GuardarProv;
     private javax.swing.JButton Button_PrimeroCLT;
     private javax.swing.JButton Button_PrimeroCLT1;
     private javax.swing.JButton Button_PrimeroCompras;
-    private javax.swing.JButton Button_PrimeroPDT;
     private javax.swing.JButton Button_PrimeroPRO;
+    private javax.swing.JButton Button_PrimeroProducto;
     private javax.swing.JButton Button_Productos;
     private javax.swing.JButton Button_Proveedores;
     private javax.swing.JButton Button_SiguienteCLT;
     private javax.swing.JButton Button_SiguienteCLT1;
     private javax.swing.JButton Button_SiguienteCompras;
-    private javax.swing.JButton Button_SiguientePDT;
     private javax.swing.JButton Button_SiguientePRO;
+    private javax.swing.JButton Button_SiguienteProducto;
     private javax.swing.JButton Button_UltimoCLT;
     private javax.swing.JButton Button_UltimoCLT1;
     private javax.swing.JButton Button_UltimoCompras;
-    private javax.swing.JButton Button_UltimoPDT;
     private javax.swing.JButton Button_UltimoPRO;
+    private javax.swing.JButton Button_UltimoProducto;
     private javax.swing.JButton Button_Ventas;
     private javax.swing.JCheckBox CheckBoxCompraCredito;
     private javax.swing.JComboBox ComboBox_CategoriaPro;
@@ -5205,10 +5379,10 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JLabel Label_NombreCliente;
     private javax.swing.JLabel Label_NombreCliente1;
     private javax.swing.JLabel Label_NombreVentaTick;
-    private javax.swing.JLabel Label_Paginas1;
     private javax.swing.JLabel Label_Paginas3;
     private javax.swing.JLabel Label_PaginasClientes;
     private javax.swing.JLabel Label_PaginasCompra;
+    private javax.swing.JLabel Label_PaginasProductos;
     private javax.swing.JLabel Label_PaginasProveedor;
     private javax.swing.JLabel Label_Pago1;
     private javax.swing.JLabel Label_Pago2;
@@ -5223,6 +5397,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JLabel Label_TelefonoCliente2;
     private javax.swing.JLabel Label_TelefonoProv;
     private javax.swing.JPanel PanelBanner;
+    private javax.swing.JPanel PanelCodeProducto;
     private javax.swing.JPanel PanelReciboCompra;
     private javax.swing.JRadioButton RadioButton_Activo;
     private javax.swing.JRadioButton RadioButton_ActivoProv;
@@ -5235,7 +5410,6 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JRadioButton RadioButton_PagosCliente;
     private javax.swing.JRadioButton RadioButton_PagosPro;
     private javax.swing.JTabbedPane TabbedPaneCompras;
-    private javax.swing.JTable Table_BodegaPDT;
     private javax.swing.JTable Table_Cat;
     private javax.swing.JTable Table_Clientes;
     private javax.swing.JTable Table_Clientes1;
@@ -5243,10 +5417,12 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JTable Table_ComprasProveedor;
     private javax.swing.JTable Table_Dpt;
     private javax.swing.JTable Table_ProductosCompras;
+    private javax.swing.JTable Table_ProductosProd;
     private javax.swing.JTable Table_Proveedores;
     private javax.swing.JTable Table_ReportesCLT;
     private javax.swing.JTable Table_ReportesCLT1;
     private javax.swing.JTable Table_ReportesProveedor;
+    private javax.swing.JTextField TextFieldBuscarProductos;
     private javax.swing.JTextField TextField_ApellidoCliente;
     private javax.swing.JTextField TextField_BuscarCliente;
     private javax.swing.JTextField TextField_BuscarCliente1;
@@ -5331,6 +5507,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel77;
     private javax.swing.JLabel jLabel78;
@@ -5374,7 +5551,6 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JPanel jPanel33;
     private javax.swing.JPanel jPanel34;
     private javax.swing.JPanel jPanel35;
-    private javax.swing.JPanel jPanel36;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;

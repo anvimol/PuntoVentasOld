@@ -55,6 +55,16 @@ public class Paginador extends ListClass implements IClassModels {
                 proveedor.searchProveedores(table, "", num_registro, pageSize);
                 maxReg = numProveedor.size();
                 break;
+            case 4:
+                if (fun == 1) {
+                    num_registro = 0;
+                    numPagi = 1;
+                    boton = 0;
+                }
+                productos = producto.producto();
+                producto.searchProductos(table, "", num_registro, pageSize);
+                maxReg = productos.size();
+                break;
             case 5:
                 if (fun == 1) {
                     num_registro = 0;
@@ -85,6 +95,9 @@ public class Paginador extends ListClass implements IClassModels {
             case 2:
                 proveedor.searchProveedores(table, "", numPagi, pageSize);
                 break;
+            case 4:
+                producto.searchProductos(table, "", numPagi, pageSize);
+                break;
             case 5:
                 compra.searchCompras(table, "", numPagi, pageSize);
                 break;
@@ -103,7 +116,7 @@ public class Paginador extends ListClass implements IClassModels {
             label.setText("Página " + String.valueOf(numPagi) + "/"
                     + String.valueOf(pageCount));
             numPagi -= 1;
-            
+
             num_registro = pageSize * numPagi;
             switch (tab) {
                 case 1:
@@ -111,6 +124,9 @@ public class Paginador extends ListClass implements IClassModels {
                     break;
                 case 2:
                     proveedor.searchProveedores(table, "", num_registro, pageSize);
+                    break;
+                case 4:
+                    producto.searchProductos(table, "", num_registro, pageSize);
                     break;
                 case 5:
                     compra.searchCompras(table, "", num_registro, pageSize);
@@ -141,6 +157,9 @@ public class Paginador extends ListClass implements IClassModels {
                     case 2:
                         proveedor.searchProveedores(table, "", num_registro, pageSize);
                         break;
+                    case 4:
+                        producto.searchProductos(table, "", num_registro, pageSize);
+                        break;
                     case 5:
                         compra.searchCompras(table, "", num_registro, pageSize);
                         break;
@@ -167,6 +186,9 @@ public class Paginador extends ListClass implements IClassModels {
                 break;
             case 2:
                 proveedor.searchProveedores(table, "", num_registro, pageSize);
+                break;
+            case 4:
+                producto.searchProductos(table, "", num_registro, pageSize);
                 break;
             case 5:
                 compra.searchCompras(table, "", num_registro, pageSize);

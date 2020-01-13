@@ -379,7 +379,7 @@ public class Compra extends Consult {
                 ini = count2 - count1;
             }
             for (int i = ini; i < count2; i++) {
-                sql = "INSERT INTO tempo_productos(idCompra) VALUES(?)";
+                sql = "INSERT INTO tempo_productos(compra_id) VALUES(?)";
                 object = new Object[] {compras().get(i).getIdCompra()};
                 insert(sql, object);
             }

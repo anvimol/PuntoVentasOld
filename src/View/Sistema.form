@@ -2078,6 +2078,11 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="TextField_BuscarProveedor">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="13" style="0"/>
+                    </Property>
+                  </Properties>
                   <Events>
                     <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TextField_BuscarProveedorKeyReleased"/>
                   </Events>
@@ -2908,7 +2913,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="Label_DescripcionPDT" alignment="0" max="32767" attributes="0"/>
                               <Component id="Label_PrecioVentaProducto" max="32767" attributes="0"/>
-                              <Component id="jPanel36" max="32767" attributes="0"/>
+                              <Component id="PanelCodeProducto" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="TextField_PrecioVentaPDT" alignment="0" min="-2" pref="123" max="-2" attributes="0"/>
@@ -2925,9 +2930,9 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  <Component id="Button_GuardarPDT" min="-2" pref="85" max="-2" attributes="0"/>
+                                  <Component id="Button_GuardarProducto" min="-2" pref="85" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="Button_CancelarPDT" min="-2" pref="85" max="-2" attributes="0"/>
+                                  <Component id="Button_CancelarProducto" min="-2" pref="85" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -2941,7 +2946,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jPanel36" min="-2" max="-2" attributes="0"/>
+                          <Component id="PanelCodeProducto" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="Label_DescripcionPDT" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -2959,9 +2964,9 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="ComboBox_CategoriaPro" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="129" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="Button_GuardarPDT" alignment="1" min="-2" pref="39" max="-2" attributes="0"/>
-                              <Component id="Button_CancelarPDT" alignment="1" min="-2" pref="39" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="Button_GuardarProducto" alignment="1" min="-2" pref="39" max="-2" attributes="0"/>
+                              <Component id="Button_CancelarProducto" alignment="1" min="-2" pref="39" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       </Group>
@@ -3036,7 +3041,7 @@
                     <Property name="text" type="java.lang.String" value="Departamento"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="Button_GuardarPDT">
+                <Component class="javax.swing.JButton" name="Button_GuardarProducto">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Images/Agregar.png"/>
@@ -3046,8 +3051,11 @@
                       <Border info="null"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Button_GuardarProductoActionPerformed"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="Button_CancelarPDT">
+                <Component class="javax.swing.JButton" name="Button_CancelarProducto">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Images/Cancelar.png"/>
@@ -3057,6 +3065,9 @@
                       <Border info="null"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Button_CancelarProductoActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="Label_CategoriaPDT">
                   <Properties>
@@ -3089,7 +3100,7 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Container class="javax.swing.JPanel" name="jPanel36">
+                <Container class="javax.swing.JPanel" name="PanelCodeProducto">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -3167,7 +3178,11 @@
                           <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="244" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="TextFieldBuscarProductos" min="-2" pref="190" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
                           <Component id="Label1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -3177,7 +3192,11 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="Label1" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="Label1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="TextFieldBuscarProductos" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jScrollPane4" min="-2" pref="193" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
@@ -3230,6 +3249,27 @@
                     <Property name="text" type="java.lang.String" value="Productos comprados"/>
                   </Properties>
                 </Component>
+                <Component class="javax.swing.JLabel" name="jLabel6">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="1"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="7c" green="6a" red="46" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Buscar:"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="TextFieldBuscarProductos">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="13" style="0"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TextFieldBuscarProductosKeyReleased"/>
+                  </Events>
+                </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="jPanel13">
@@ -3263,17 +3303,17 @@
                                                   <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="Button_PrimeroPDT" min="-2" pref="111" max="-2" attributes="0"/>
+                                                  <Component id="Button_PrimeroProducto" min="-2" pref="111" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="Button_AnteriorPDT" min="-2" pref="111" max="-2" attributes="0"/>
+                                                  <Component id="Button_AnteriorProducto" min="-2" pref="111" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="Button_SiguientePDT" min="-2" pref="111" max="-2" attributes="0"/>
+                                                  <Component id="Button_SiguienteProducto" min="-2" pref="111" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="Button_UltimoPDT" min="-2" pref="111" max="-2" attributes="0"/>
+                                                  <Component id="Button_UltimoProducto" min="-2" pref="111" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace min="-2" pref="208" max="-2" attributes="0"/>
-                                                  <Component id="Label_Paginas1" min="-2" pref="202" max="-2" attributes="0"/>
+                                                  <Component id="Label_PaginasProductos" min="-2" pref="202" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
@@ -3297,13 +3337,13 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jScrollPane5" pref="0" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="Label_Paginas1" min="-2" max="-2" attributes="0"/>
+                          <Component id="Label_PaginasProductos" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="Button_AnteriorPDT" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="Button_PrimeroPDT" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="Button_SiguientePDT" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="Button_UltimoPDT" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="Button_AnteriorProducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="Button_PrimeroProducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="Button_SiguienteProducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="Button_UltimoProducto" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
@@ -3320,7 +3360,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTable" name="Table_BodegaPDT">
+                    <Component class="javax.swing.JTable" name="Table_ProductosProd">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="0" rowCount="4"/>
@@ -3333,8 +3373,12 @@
                           <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Table_ProductosProdMouseClicked"/>
+                        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="Table_ProductosProdKeyReleased"/>
+                      </Events>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="Table_BodegaPDT = new javax.swing.JTable(){&#xa;    public boolean isCellEditable(int rowIndex, int colIndex) {&#xa;        return false; //Disallow the editing of any cell&#xa;    }&#xa;};"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="Table_ProductosProd = new javax.swing.JTable(){&#xa;    public boolean isCellEditable(int rowIndex, int colIndex) {&#xa;        return false; //Disallow the editing of any cell&#xa;    }&#xa;};"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -3361,39 +3405,51 @@
                     <Property name="text" type="java.lang.String" value="Productos"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="Button_PrimeroPDT">
+                <Component class="javax.swing.JButton" name="Button_PrimeroProducto">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Images/Left-12.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Primero"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Button_PrimeroProductoActionPerformed"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="Button_AnteriorPDT">
+                <Component class="javax.swing.JButton" name="Button_AnteriorProducto">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Images/Left.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Anterior "/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Button_AnteriorProductoActionPerformed"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="Button_SiguientePDT">
+                <Component class="javax.swing.JButton" name="Button_SiguienteProducto">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Images/Right.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Siguiente"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Button_SiguienteProductoActionPerformed"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="Button_UltimoPDT">
+                <Component class="javax.swing.JButton" name="Button_UltimoProducto">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Images/Right-12.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Ultimo"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Button_UltimoProductoActionPerformed"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="Label_Paginas1">
+                <Component class="javax.swing.JLabel" name="Label_PaginasProductos">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -4710,28 +4766,32 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
-                                  <Component id="Button_PrimeroCompras" min="-2" pref="111" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                                  <Component id="Button_AnteriorCompras" min="-2" pref="111" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                                  <Component id="Button_SiguienteCompras" min="-2" pref="111" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                                  <Component id="Button_UltimoCompras" min="-2" pref="111" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
+                                          <Component id="Button_PrimeroCompras" min="-2" pref="111" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                                          <Component id="Button_AnteriorCompras" min="-2" pref="111" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                                          <Component id="Button_SiguienteCompras" min="-2" pref="111" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                                          <Component id="Button_UltimoCompras" min="-2" pref="111" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="302" max="-2" attributes="0"/>
+                                          <Component id="Label_PaginasCompra" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="0" pref="573" max="32767" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="302" max="-2" attributes="0"/>
-                                  <Component id="Label_PaginasCompra" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jScrollPane9" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="583" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane9" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
