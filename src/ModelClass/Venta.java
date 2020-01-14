@@ -30,13 +30,14 @@ public class Venta extends Consult {
                 .collect(Collectors.toList());
     }
 
-    public void saveVentasTempo(String codigo, int funcion, int caja) {
+    public void saveVentasTempo(String codigo, int funcion, int caja, int idUsuario) {
         String importe, precios;
         int idTempo, cantidad = 1, existencia;
         double descuento, precio, importes;
 
         tempoVentas = tempoVentas().stream()
-                .filter(t -> t.getCodigo().equals(codigo) && t.getCaja() == caja)
+                .filter(t -> t.getCodigo().equals(codigo) && t.getCaja() == caja
+                && t.getIdUsuario() == idUsuario)
                 .collect(Collectors.toList());
         productos = productos().stream()
                 .filter(t -> t.getCodigo().equals(codigo))
@@ -57,26 +58,29 @@ public class Venta extends Consult {
             importes = precio * cantidad;
             importe = formato.decimal(importes) + "€";
             sql = "UPDATE tempo_ventas SET codigo=?, descripcion=?, precio=?, cantidad=?,"
-                    + "importe=?, caja=? WHERE idTempo=" + tempoVentas.get(0).getIdTempo();
+                    + "importe=?, caja=?, idUsuario=? "
+                    + "WHERE idTempo=" + tempoVentas.get(0).getIdTempo();
             object = new Object[]{
                 productos.get(0).getCodigo(),
                 productos.get(0).getProducto(),
                 precios,
                 cantidad,
                 importe,
-                caja
+                caja,
+                idUsuario
             };
             update(sql, object);
         } else {
             sql = "INSERT INTO tempo_ventas(codigo, descripcion, precio, cantidad,"
-                    + "importe, caja) VALUES(?,?,?,?,?,?)";
+                    + "importe, caja, idUsuario) VALUES(?,?,?,?,?,?,?)";
             object = new Object[]{
                 productos.get(0).getCodigo(),
                 productos.get(0).getProducto(),
                 precios,
                 1,
                 precios,
-                caja
+                caja,
+                idUsuario
             };
             insert(sql, object);
         }
@@ -105,13 +109,13 @@ public class Venta extends Consult {
     }
 
     public void searchVentaTempo(JTable table, int num_registro, int reg_por_pagina,
-        int cajas) {
+            int cajas, int idUsuario) {
         String[] registros = new String[6];
         String[] titulos = {"ID", "Código", "Descripción", "Precio", "Cantidad", "Importe"};
         modelo1 = new DefaultTableModel(null, titulos);
 
         tempoVentas = tempoVentas().stream()
-                .filter(t -> t.getCaja() == cajas)
+                .filter(t -> t.getCaja() == cajas && t.getIdUsuario() == idUsuario)
                 .skip(num_registro).limit(reg_por_pagina)
                 .collect(Collectors.toList());
         if (0 < tempoVentas.size()) {

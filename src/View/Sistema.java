@@ -5317,8 +5317,10 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         } else {
             List<Bodegas> bodega = venta.searchBodega(TextField_BuscarProductosVentas.getText());
             if (0 < bodega.size()) {
-                venta.saveVentasTempo(TextField_BuscarProductosVentas.getText(), 0, cajaUser);
-                venta.searchVentaTempo(Table_VentasTempo, num_registro, pageSize, cajaUser);
+                venta.saveVentasTempo(TextField_BuscarProductosVentas.getText(), 
+                        0, cajaUser, idUsuario);
+                venta.searchVentaTempo(Table_VentasTempo, num_registro, pageSize, 
+                        cajaUser, idUsuario);
             } else {
                 lblMensajeVenta.setText("El código del producto no existe");
                 lblMensajeVenta.setForeground(Color.RED);
@@ -5329,7 +5331,8 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     public void restablecerVentas() {
         tab = 0;
         accion = "insert";
-        venta.searchVentaTempo(Table_VentasTempo, num_registro, pageSize, cajaUser);
+        venta.searchVentaTempo(Table_VentasTempo, num_registro, pageSize, 
+                cajaUser, idUsuario);
     }
     // </editor-fold> 
     /**

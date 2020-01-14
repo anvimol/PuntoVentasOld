@@ -17,6 +17,7 @@ public class Tempo_ventas {
     private int cantidad;
     private String importe;
     private int caja;
+    private int idUsuario;
 
     public Tempo_ventas() {
     }
@@ -75,6 +76,14 @@ public class Tempo_ventas {
 
     public void setCaja(int caja) {
         this.caja = caja;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
     
     
