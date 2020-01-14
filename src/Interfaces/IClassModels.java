@@ -26,4 +26,5 @@ public interface IClassModels {
     public FormatDecimal formato = new FormatDecimal();
     public Imprimir imprimir = new Imprimir();
     public Producto producto = new Producto();
+    public Venta venta = new Venta();
 }

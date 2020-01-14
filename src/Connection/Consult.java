@@ -238,4 +238,14 @@ public class Consult extends Conexion {
         }
         return bodega;
     }
+    
+    public List<Tempo_ventas> tempoVentas() {
+        try {
+            tempoVentas = (List<Tempo_ventas>) QR.query(getConn(), "SELECT * FROM tempo_ventas",
+                    new BeanListHandler(Tempo_ventas.class));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex);
+        }
+        return tempoVentas;
+    }
 }
