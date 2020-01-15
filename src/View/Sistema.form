@@ -512,6 +512,9 @@
                           <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Table_VentasTempoMouseClicked"/>
+                      </Events>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="  Table_Clientes = new javax.swing.JTable(){&#xa;    public boolean isCellEditable(int rowIndex, int colIndex) {&#xa;        return false; //Disallow the editing of any cell&#xa;    }&#xa;};"/>
                       </AuxValues>
@@ -620,7 +623,7 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel16" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="TextField_NombreCliente1" alignment="0" min="-2" pref="188" max="-2" attributes="0"/>
-                                      <Component id="Label_DireccionCliente1" alignment="0" min="-2" pref="221" max="-2" attributes="0"/>
+                                      <Component id="Label_MontoPagarVentas" alignment="0" min="-2" pref="221" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                                           <Component id="Button_GuardarCliente2" min="-2" pref="85" max="-2" attributes="0"/>
@@ -653,7 +656,7 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="Label_ApellidoCliente1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="Label_DireccionCliente1" min="-2" max="-2" attributes="0"/>
+                          <Component id="Label_MontoPagarVentas" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="Label_TelefonoCliente1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -710,7 +713,7 @@
                     <Property name="text" type="java.lang.String" value="Monto a pagar"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="Label_DireccionCliente1">
+                <Component class="javax.swing.JLabel" name="Label_MontoPagarVentas">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="24" style="1"/>

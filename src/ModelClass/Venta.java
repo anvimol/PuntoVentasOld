@@ -10,6 +10,8 @@ import Connection.Consult;
 import Models.*;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -88,24 +90,20 @@ public class Venta extends Consult {
                 .filter(b -> b.getCodigo().equals(codigo))
                 .collect(Collectors.toList());
         existencia = bodega.get(0).getExistencia();
-        if (existencia == 1) {
-            sql = "DELETE FROM bodegas WHERE id LIKE ?";
-            delete(sql, bodega.get(0).getId());
-        } else {
-            existencia--;
-            sql = "UPDATE bodegas SET producto_id=?, codigo=?, existencia=?, dia=?, "
-                    + "mes=?, year=?, fecha=? WHERE id=" + bodega.get(0).getId();
-            object = new Object[]{
-                bodega.get(0).getProducto_id(),
-                bodega.get(0).getCodigo(),
-                existencia,
-                bodega.get(0).getDia(),
-                bodega.get(0).getMes(),
-                bodega.get(0).getYear(),
-                bodega.get(0).getFecha()
-            };
-            update(sql, object);
-        }
+
+        existencia--;
+        sql = "UPDATE bodegas SET producto_id=?, codigo=?, existencia=?, dia=?, "
+                + "mes=?, year=?, fecha=? WHERE id=" + bodega.get(0).getId();
+        object = new Object[]{
+            bodega.get(0).getProducto_id(),
+            bodega.get(0).getCodigo(),
+            existencia,
+            bodega.get(0).getDia(),
+            bodega.get(0).getMes(),
+            bodega.get(0).getYear(),
+            bodega.get(0).getFecha()
+        };
+        update(sql, object);
     }
 
     public void searchVentaTempo(JTable table, int num_registro, int reg_por_pagina,
@@ -136,5 +134,65 @@ public class Venta extends Consult {
         table.getColumnModel().getColumn(0).setPreferredWidth(0);
         table.setDefaultRenderer(Object.class, new RenderCelda(0));
 
+    }
+
+    public DefaultTableModel getModelo() {
+        return modelo1;
+    }
+
+    public void importes(JLabel label, int caja, int idUsuario) {
+        importe = 0;
+        tempoVentas = tempoVentas().stream()
+                .filter(t -> t.getCaja() == caja && t.getIdUsuario() == idUsuario)
+                .collect(Collectors.toList());
+        if (0 < tempoVentas.size()) {
+            tempoVentas.forEach(item -> {
+                importe += formato.reconstruir(item.getImporte().replace("€", ""));
+            });
+            label.setText(formato.decimal(importe) + "€");
+        } else {
+            label.setText("0,00€");
+        }
+    }
+
+    public void deleteVentaTempo(String codigo, int cant, int caja, int idUsuario) {
+        int cantidad = 0, existencia = 0;
+        tempoVentas = tempoVentas().stream()
+                .filter(t -> t.getCodigo().equals(codigo) && t.getCaja() == caja
+                && t.getIdUsuario() == idUsuario)
+                .collect(Collectors.toList());
+        if (tempoVentas.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay productos en la lista de ventas");
+        } else {
+            cantidad = tempoVentas.get(0).getCantidad();
+            bodega = bodegas().stream()
+                    .filter(b -> b.getCodigo().equals(codigo))
+                    .collect(Collectors.toList());
+            if (bodega.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "No hay productos en Bodega");
+            } else {
+                existencia = bodega.get(0).getExistencia();
+                if (cant == 1) {
+                    existencia += cantidad;
+                    sql = "DELETE FROM tempo_ventas WHERE idTempo LIKE ?";
+                    delete(sql, tempoVentas.get(caja).getIdTempo());
+                } else {
+                    existencia++;
+                    saveVentasTempo(codigo, 1, caja, idUsuario);
+                }
+                sql = "UPDATE bodegas SET producto_id=?, codigo=?, existencia=?, dia=?,"
+                        + "mes=?, year=?, fecha=? WHERE id=" + bodega.get(0).getId();
+                object = new Object[]{
+                    bodega.get(0).getProducto_id(),
+                    bodega.get(0).getCodigo(),
+                    existencia,
+                    bodega.get(0).getDia(),
+                    bodega.get(0).getMes(),
+                    bodega.get(0).getYear(),
+                    bodega.get(0).getFecha()
+                };
+                update(sql, object);
+            }
+        }
     }
 }

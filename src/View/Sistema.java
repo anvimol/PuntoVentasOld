@@ -153,7 +153,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         Label_NombreCliente1 = new javax.swing.JLabel();
         TextField_NombreCliente1 = new javax.swing.JTextField();
         Label_ApellidoCliente1 = new javax.swing.JLabel();
-        Label_DireccionCliente1 = new javax.swing.JLabel();
+        Label_MontoPagarVentas = new javax.swing.JLabel();
         Label_TelefonoCliente1 = new javax.swing.JLabel();
         Label_Pago1 = new javax.swing.JLabel();
         Button_GuardarCliente2 = new javax.swing.JButton();
@@ -633,6 +633,11 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         ));
         Table_VentasTempo.setRowHeight(20);
         Table_VentasTempo.setSelectionBackground(new java.awt.Color(102, 204, 255));
+        Table_VentasTempo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Table_VentasTempoMouseClicked(evt);
+            }
+        });
         jScrollPane7.setViewportView(Table_VentasTempo);
 
         Button_AnteriorCLT1.setBackground(new java.awt.Color(0, 153, 153));
@@ -718,10 +723,10 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         Label_ApellidoCliente1.setForeground(new java.awt.Color(70, 106, 124));
         Label_ApellidoCliente1.setText("Monto a pagar");
 
-        Label_DireccionCliente1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        Label_DireccionCliente1.setForeground(new java.awt.Color(70, 106, 124));
-        Label_DireccionCliente1.setText("0,00€");
-        Label_DireccionCliente1.setToolTipText("");
+        Label_MontoPagarVentas.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        Label_MontoPagarVentas.setForeground(new java.awt.Color(70, 106, 124));
+        Label_MontoPagarVentas.setText("0,00€");
+        Label_MontoPagarVentas.setToolTipText("");
 
         Label_TelefonoCliente1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         Label_TelefonoCliente1.setForeground(new java.awt.Color(70, 106, 124));
@@ -763,7 +768,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
                         .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel16)
                             .addComponent(TextField_NombreCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Label_DireccionCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Label_MontoPagarVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel25Layout.createSequentialGroup()
                                 .addGap(31, 31, 31)
                                 .addComponent(Button_GuardarCliente2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -790,7 +795,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Label_ApellidoCliente1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Label_DireccionCliente1)
+                .addComponent(Label_MontoPagarVentas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Label_TelefonoCliente1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -5309,6 +5314,14 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         restablecerVentas();
     }//GEN-LAST:event_Button_VentasActionPerformed
 
+    public void restablecerVentas() {
+        tab = 0;
+        accion = "insert";
+        venta.searchVentaTempo(Table_VentasTempo, num_registro, pageSize,
+                cajaUser, idUsuario);
+        venta.importes(Label_MontoPagarVentas, cajaUser, idUsuario);
+    }
+
     private void ButtonBuscarProductoVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonBuscarProductoVentasActionPerformed
         if (TextField_BuscarProductosVentas.getText().equals("")) {
             lblMensajeVenta.setText("Ingrese el código del producto");
@@ -5317,10 +5330,17 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         } else {
             List<Bodegas> bodega = venta.searchBodega(TextField_BuscarProductosVentas.getText());
             if (0 < bodega.size()) {
-                venta.saveVentasTempo(TextField_BuscarProductosVentas.getText(), 
-                        0, cajaUser, idUsuario);
-                venta.searchVentaTempo(Table_VentasTempo, num_registro, pageSize, 
-                        cajaUser, idUsuario);
+                if (0 == bodega.get(0).getExistencia()) {
+                    lblMensajeVenta.setText("No hay productos en bodega");
+                    lblMensajeVenta.setForeground(Color.RED);
+                } else {
+                    lblMensajeVenta.setText("");
+                    venta.saveVentasTempo(TextField_BuscarProductosVentas.getText(),
+                            0, cajaUser, idUsuario);
+                    venta.searchVentaTempo(Table_VentasTempo, num_registro, pageSize,
+                            cajaUser, idUsuario);
+                    venta.importes(Label_MontoPagarVentas, cajaUser, idUsuario);
+                }
             } else {
                 lblMensajeVenta.setText("El código del producto no existe");
                 lblMensajeVenta.setForeground(Color.RED);
@@ -5328,12 +5348,20 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         }
     }//GEN-LAST:event_ButtonBuscarProductoVentasActionPerformed
 
-    public void restablecerVentas() {
-        tab = 0;
-        accion = "insert";
-        venta.searchVentaTempo(Table_VentasTempo, num_registro, pageSize, 
-                cajaUser, idUsuario);
-    }
+    private void Table_VentasTempoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_VentasTempoMouseClicked
+        if (Table_VentasTempo.getSelectedRows().length > 0) {
+            if (evt.getClickCount() == 2) {
+                int fila = Table_VentasTempo.getSelectedRow();
+                String codigo = (String) venta.getModelo().getValueAt(fila, 1);
+                int cantidad = Integer.valueOf((String) venta.getModelo().getValueAt(fila, 4));
+                venta.deleteVentaTempo(codigo, cantidad, cajaUser, idUsuario);
+                venta.searchVentaTempo(Table_VentasTempo, num_registro, pageSize,
+                        cajaUser, idUsuario);
+                venta.importes(Label_MontoPagarVentas, cajaUser, idUsuario);
+            }
+        }
+    }//GEN-LAST:event_Table_VentasTempoMouseClicked
+
     // </editor-fold> 
     /**
      * @param args the command line arguments
@@ -5452,7 +5480,6 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JLabel Label_DescripcionCP;
     private javax.swing.JLabel Label_DescripcionPDT;
     private javax.swing.JLabel Label_DireccionCliente;
-    private javax.swing.JLabel Label_DireccionCliente1;
     private javax.swing.JLabel Label_DireccionProv;
     private javax.swing.JLabel Label_Dpt;
     private javax.swing.JLabel Label_EmailCliente;
@@ -5463,6 +5490,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JLabel Label_ImporteCP;
     private javax.swing.JLabel Label_ImporteCP1;
     private javax.swing.JLabel Label_ImporteCP2;
+    private javax.swing.JLabel Label_MontoPagarVentas;
     private javax.swing.JLabel Label_NombreCliente;
     private javax.swing.JLabel Label_NombreCliente1;
     private javax.swing.JLabel Label_NombreVentaTick;
