@@ -114,7 +114,7 @@ public class Cliente extends Consult {
         String[] titulos = {"Id", "Nombre", "Apellidos", "Saldo actual", "Fecha actual",
             "Ultimo pago", "Fecha pago"};
         modelo2 = new DefaultTableModel(null, titulos);
-        List<Reportes_Clientes> reportes = reportesClientes(idCliente);
+        List<Reportes_Clientes> reportes = reportesClientes(idCliente, 1);
         reportes.forEach(item -> {
             registros[0] = String.valueOf(item.getIdRegistro());
             registros[1] = item.getNombre();
@@ -151,7 +151,7 @@ public class Cliente extends Consult {
             Object[] clie = new Object[]{id, nombre, apellidos, direccion, email, telefono, estado};
             update(sql, clie);
 
-            List<Reportes_Clientes> report = reportesClientes(idCliente);
+            List<Reportes_Clientes> report = reportesClientes(idCliente, 1);
             int idRegistro = report.get(0).getIdRegistro();
             int idClie = report.get(0).getIdCliente();
             String saldoAct = report.get(0).getSaldoActual();
@@ -206,7 +206,7 @@ public class Cliente extends Consult {
 //        delete(sql, dele1);
 //    }
     public void updateReportes(String saldoActual, String fecha, String pago, int idCliente) {
-        List<Reportes_Clientes> reportes = reportesClientes(idCliente);
+        List<Reportes_Clientes> reportes = reportesClientes(idCliente, 1);
         int idRegistro = reportes.get(0).getIdRegistro();
         int idCli = reportes.get(0).getIdCliente();
         String ID = reportes.get(0).getID();

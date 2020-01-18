@@ -35,5 +35,6 @@ public class ListClass {
     public List<Productos> productos = new ArrayList();
     public List<Bodegas> bodega = new ArrayList();
     public List<Tempo_ventas> tempoVentas = new ArrayList();
-    
+    public List<Cajas_ingresos> cajaIngresoInicial = new ArrayList();
+    public List<Cajas_ingresos> cajaIngresoVenta = new ArrayList();
 }

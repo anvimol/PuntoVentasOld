@@ -52,23 +52,26 @@ public class Consult extends Conexion {
         }
     }
 
-    public List<Reportes_Clientes> reportesClientes(int idCli) {
+    public List<Reportes_Clientes> reportesClientes(int idCli, int funcion) {
+        String where = "";
         String condicion = " clientes.idCliente = reportes_clientes.cliente_id ";
         String campos = " clientes.idCliente, clientes.ID, clientes.nombre, clientes.apellidos,"
                 + "reportes_clientes.idRegistro, reportes_clientes.cliente_id, reportes_clientes.saldoActual,"
                 + "reportes_clientes.fechaActual, reportes_clientes.ultimoPago,"
                 + "reportes_clientes.fechaPago, reportes_clientes.IDCli ";
+        if (funcion == 1) {
+            where = "WHERE reportes_clientes.cliente_id = " + idCli;
+        }
         try {
             reportes_clientes = (List<Reportes_Clientes>) QR.query(getConn(),
                     "SELECT " + campos + " FROM reportes_clientes INNER JOIN clientes ON "
-                    + condicion + " WHERE reportes_clientes.cliente_id = " + idCli,
-                    new BeanListHandler(Reportes_Clientes.class));
+                    + condicion + where, new BeanListHandler(Reportes_Clientes.class));
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error: " + ex);
         }
         return reportes_clientes;
     }
-
+    
     public void update(String sql, Object[] data) {
         final QueryRunner qr = new QueryRunner(true);
         try {

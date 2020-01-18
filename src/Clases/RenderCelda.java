@@ -36,6 +36,13 @@ public class RenderCelda extends DefaultTableCellRenderer {
                     cell.setForeground(Color.BLACK);
                 }
                 break;
+            case 1:
+                if (column == 4 || column == 6) {
+                    cell.setForeground(new Color(0, 153, 102));
+                } else {
+                    cell.setForeground(Color.BLACK);
+                }
+                break;
             case 4:
                 if (column == colum || column == 3) {
                     cell.setForeground(new Color(0, 153, 102));

@@ -14,6 +14,7 @@ public class Cajas_ingresos {
     private int caja;
     private String ingreso;
     private String type;
+    private int idUsuario;
     private int dia;
     private String mes;
     private String anyo;
@@ -48,6 +49,14 @@ public class Cajas_ingresos {
 
     public String getType() {
         return type;
+    }
+    
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public void setType(String type) {
@@ -85,6 +94,8 @@ public class Cajas_ingresos {
     public void setAnyo(String anyo) {
         this.anyo = anyo;
     }
+
+    
     
     
 }
