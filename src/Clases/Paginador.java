@@ -35,6 +35,16 @@ public class Paginador extends ListClass implements IClassModels {
 
     public void cargarDatos() {
         switch (tab) {
+            case 0:
+                if (fun == 1) {
+                    num_registro = 0;
+                    numPagi = 1;
+                    boton = 0;
+                }
+                tempoVentas = venta.getTempoVenta();
+                venta.searchVentaTempo(table, num_registro, pageSize);
+                maxReg = tempoVentas.size();
+                break;
             case 1:
                 if (fun == 1) {
                     num_registro = 0;
@@ -89,6 +99,9 @@ public class Paginador extends ListClass implements IClassModels {
         numPagi = 0;
         label.setText("Página " + "1" + "/" + String.valueOf(pageCount));
         switch (tab) {
+            case 0:
+                venta.searchVentaTempo(table, numPagi, pageSize);
+                break;
             case 1:
                 cliente.searchClientes(table, "", numPagi, pageSize);
                 break;
@@ -119,6 +132,9 @@ public class Paginador extends ListClass implements IClassModels {
 
             num_registro = pageSize * numPagi;
             switch (tab) {
+                case 0:
+                    venta.searchVentaTempo(table, num_registro, pageSize);
+                    break;
                 case 1:
                     cliente.searchClientes(table, "", num_registro, pageSize);
                     break;
@@ -151,6 +167,9 @@ public class Paginador extends ListClass implements IClassModels {
                 boton = 3;
                 num_registro = pageSize * numPagi;
                 switch (tab) {
+                    case 0:
+                        venta.searchVentaTempo(table, num_registro, pageSize);
+                        break;
                     case 1:
                         cliente.searchClientes(table, "", num_registro, pageSize);
                         break;
@@ -181,6 +200,9 @@ public class Paginador extends ListClass implements IClassModels {
         label.setText("Página " + String.valueOf(pageCount) + "/"
                 + String.valueOf(pageCount));
         switch (tab) {
+            case 0:
+                venta.searchVentaTempo(table, num_registro, pageSize);
+                break;
             case 1:
                 cliente.searchClientes(table, "", num_registro, pageSize);
                 break;

@@ -32,19 +32,19 @@ public class Venta extends Consult {
     private double importe = 0, totalPagar = 0, ingresosTotales = 0;
     private boolean suCambio = false, verificar = false;
     private int caja, idUsuario;
-    
+
     public void start(int caja, int idUsuario) {
         this.caja = caja;
         this.idUsuario = idUsuario;
     }
-    
+
     public List<Bodegas> searchBodega(String codigo) {
         return bodegas().stream()
                 .filter(b -> b.getCodigo().equals(codigo))
                 .collect(Collectors.toList());
     }
 
-    public void saveVentasTempo(String codigo, int funcion, int caja, int idUsuario) {
+    public void saveVentasTempo(String codigo, int funcion) {
         String importe, precios;
         int idTempo, cantidad = 1, existencia;
         double descuento, precio, importes;
@@ -113,14 +113,13 @@ public class Venta extends Consult {
 
     }
 
-    public void searchVentaTempo(JTable table, int num_registro, int reg_por_pagina,
-            int cajas, int idUsuario) {
+    public void searchVentaTempo(JTable table, int num_registro, int reg_por_pagina) {
         String[] registros = new String[6];
         String[] titulos = {"ID", "Código", "Descripción", "Precio", "Cantidad", "Importe"};
         modelo1 = new DefaultTableModel(null, titulos);
 
         tempoVentas = tempoVentas().stream()
-                .filter(t -> t.getCaja() == cajas && t.getIdUsuario() == idUsuario)
+                .filter(t -> t.getCaja() == caja && t.getIdUsuario() == idUsuario)
                 .skip(num_registro).limit(reg_por_pagina)
                 .collect(Collectors.toList());
         if (0 < tempoVentas.size()) {
@@ -185,7 +184,7 @@ public class Venta extends Consult {
                     delete(sql, tempoVentas.get(caja).getIdTempo());
                 } else {
                     existencia++;
-                    saveVentasTempo(codigo, 1, caja, idUsuario);
+                    saveVentasTempo(codigo, 1);
                 }
                 sql = "UPDATE bodegas SET existencia=? WHERE id=" + bodega.get(0).getId();
                 object = new Object[]{
@@ -285,13 +284,15 @@ public class Venta extends Consult {
         double deuda2, deudaTotal;
         if (checkBox.isSelected()) {
             if (txtPagos.getText().isEmpty()) {
-                labels.get(0).setText("0,00€");
-                labels.get(1).setText("0,00€");
-                labels.get(2).setText(labels.get(0).getText());
-                labels.get(3).setText("Nombre");
-                labels.get(4).setText("0,00€");
-                labels.get(5).setText("0,00€");
-                labels.get(6).setText("--/--/----");
+                if (checkBox.isSelected() == false) {
+                    labels.get(0).setText("0,00€");
+                    labels.get(1).setText("0,00€");
+                    labels.get(2).setText(labels.get(0).getText());
+                    labels.get(3).setText("Nombre");
+                    labels.get(4).setText("0,00€");
+                    labels.get(5).setText("0,00€");
+                    labels.get(6).setText("--/--/----");
+                }
             } else {
                 if (verificar) {
                     if (!txtBuscar.getText().isEmpty()) {
@@ -367,7 +368,7 @@ public class Venta extends Consult {
         } else {
             if (verificar) {
                 String saldoActual, fechaPago, IDCliente = null;
-                double deuda = 0, deudaActual, pago, pagos, ingresos = 0, ingresoInicial;
+                double deuda = 0, deudaActual, pago, pagos, ingresos = 0;
                 int idRegistro = 0;
                 pagos = formato.reconstruir(txtPagos.getText());
                 if (checkBox.isSelected()) {
@@ -379,7 +380,7 @@ public class Venta extends Consult {
                         deudaActual = formato.reconstruir(saldoActual.replace("€", ""));
                         deuda = totalPagar + deudaActual;
                         valor = insertVentas(checkBox, idRegistro, deuda, pagos,
-                                IDCliente);
+                                IDCliente, labels);
                     } else {
                         if (verificar) {
                             labels.get(8).setText("Seleccione un cliente");
@@ -390,7 +391,7 @@ public class Venta extends Consult {
                     if (verificar) {
                         if (pagos >= importe) {
                             valor = insertVentas(checkBox, idRegistro, deuda, pagos,
-                                    IDCliente);
+                                    IDCliente, labels);
                         }
                     }
                 }
@@ -400,7 +401,7 @@ public class Venta extends Consult {
     }
 
     private boolean insertVentas(JCheckBox checkBox, int idRegistro, double deuda,
-            double pagos, String IDCliente) {
+            double pagos, String IDCliente, List<JLabel> labels) {
         boolean valor = false;
         tempoVentas = tempoVentas().stream()
                 .filter(t -> t.getCaja() == caja && t.getIdUsuario() == idUsuario)
@@ -466,18 +467,123 @@ public class Venta extends Consult {
                     new Calendario().getFecha()
                 };
                 insert(sql, object);
-            }else {
+            } else {
                 double ingresos = pagos + formato.reconstruir(
                         cajaIngresoVenta.get(0).getIngreso().replace("€", ""));
                 sql = "UPDATE cajas_ingresos SET ingreso=?"
                         + " WHERE id=" + cajaIngresoVenta.get(0).getId();
-                object = new Object[] {
+                object = new Object[]{
                     formato.decimal(ingresos) + "€"
                 };
                 update(sql, object);
             }
             valor = true;
+            if (suCambio) {
+                double ingresosInicial = 0;
+                cajaIngresoInicial = cajasIngresos().stream()
+                        .filter(t -> t.getCaja() == caja && t.getIdUsuario() == idUsuario
+                        && t.getType().equals("Inicial") && t.getFecha().equals(new Calendario().getFecha()))
+                        .collect(Collectors.toList());
+                if (cajaIngresoInicial.isEmpty()) {
+                    valor = ingresosVentas(labels);
+                } else {
+                    String ingreso = cajaIngresoInicial.get(0).getIngreso().replace("€", "");
+                    ingresosInicial = formato.reconstruir(ingreso);
+                    if (0 < ingresosInicial) {
+                        if (ingresosInicial > totalPagar || ingresosInicial == totalPagar) {
+                            ingresosInicial -= totalPagar;
+                            sql = "UPDATE cajas_ingresos SET ingreso=?"
+                                    + " WHERE id=" + cajaIngresoInicial.get(0).getId();
+                            object = new Object[]{
+                                formato.decimal(ingresosInicial) + "€"
+                            };
+                            update(sql, object);
+                        } else {
+                            valor = ingresosVentas(labels);
+                        }
+                    } else {
+                        valor = ingresosVentas(labels);
+                    }
+                }
+            }
         }
         return valor;
+    }
+
+    private boolean ingresosVentas(List<JLabel> labels) {
+        double ingresoVenta = 0, ingresoInicial = 0;
+        boolean valor = false;
+        cajaIngresoVenta = cajasIngresos().stream()
+                .filter(t -> t.getCaja() == caja && t.getIdUsuario() == idUsuario
+                && t.getType().equals("Ventas") && t.getFecha().equals(new Calendario().getFecha()))
+                .collect(Collectors.toList());
+        if (cajaIngresoVenta.isEmpty()) {
+            labels.get(9).setText("No hay ingresos");
+            labels.get(9).setForeground(Color.RED);
+            valor = false;
+        } else {
+            String ingreso = cajaIngresoVenta.get(0).getIngreso().replace("€", "");
+            ingresoVenta = formato.reconstruir(ingreso);
+            if (ingresoVenta > totalPagar || ingresoVenta == totalPagar) {
+                if (0 < cajaIngresoInicial.size()) {
+                    String ingresoIni = cajaIngresoInicial.get(0).getIngreso().replace("€", "");
+                    ingresoInicial = formato.reconstruir(ingresoIni);
+                    totalPagar -= ingresoInicial;
+
+                    sql = "UPDATE cajas_ingresos SET ingreso=?"
+                            + " WHERE id=" + cajaIngresoInicial.get(0).getId();
+                    object = new Object[]{
+                        "0,00€"
+                    };
+                    update(sql, object);
+                }
+
+                ingresoVenta -= totalPagar;
+                sql = "UPDATE cajas_ingresos SET ingreso=?"
+                        + " WHERE id=" + cajaIngresoVenta.get(0).getId();
+                object = new Object[]{
+                    formato.decimal(ingresoVenta) + "€"
+                };
+                update(sql, object);
+
+                valor = true;
+            } else {
+                if (totalPagar < ingresosTotales || ingresosTotales == totalPagar) {
+                    if (0 < cajaIngresoInicial.size()) {
+                        String ingresoIni = cajaIngresoInicial.get(0).getIngreso().replace("€", "");
+                        ingresoInicial = formato.reconstruir(ingresoIni);
+                        totalPagar -= ingresoInicial;
+
+                        sql = "UPDATE cajas_ingresos SET ingreso=?"
+                                + " WHERE id=" + cajaIngresoInicial.get(0).getId();
+                        object = new Object[]{
+                            "0,00€"
+                        };
+                        update(sql, object);
+                    }
+
+                    ingresoVenta -= totalPagar;
+                    sql = "UPDATE cajas_ingresos SET ingreso=?"
+                            + " WHERE id=" + cajaIngresoVenta.get(0).getId();
+                    object = new Object[]{
+                        formato.decimal(ingresoVenta) + "€"
+                    };
+                    update(sql, object);
+                    valor = true;
+                } else {
+                    labels.get(9).setText("No hay ingresos");
+                    labels.get(9).setForeground(Color.RED);
+                    valor = false;
+                }
+            }
+        }
+
+        return valor;
+    }
+
+    public List<Tempo_ventas> getTempoVenta() {
+        return tempoVentas().stream()
+                .filter(t -> t.getCaja() == caja && t.getIdUsuario() == idUsuario)
+                .collect(Collectors.toList());
     }
 }
