@@ -27,4 +27,5 @@ public interface IClassModels {
     public Imprimir imprimir = new Imprimir();
     public Producto producto = new Producto();
     public Venta venta = new Venta();
+    public Usuario usuarios = new Usuario();
 }

@@ -9,6 +9,7 @@ import Clases.Calendario;
 import Clases.Paginador;
 import Interfaces.IClassModels;
 import ModelClass.ListClass;
+import ModelClass.Usuario;
 import Models.*;
 import java.awt.Color;
 import java.awt.Component;
@@ -31,10 +32,11 @@ import javax.swing.table.TableCellRenderer;
  */
 public class Sistema extends javax.swing.JFrame implements IClassModels {
 
-    public List<Usuarios> listUsuario = new ArrayList<>();
-    public List<Cajas> listCaja = new ArrayList<>();
-    public List<Proveedores> dataProveedor = new ArrayList<>();
+    private List<Usuarios> listUsuario = new ArrayList<>();
+    private List<Cajas> listCaja = new ArrayList<>();
+    private List<Proveedores> dataProveedor = new ArrayList<>();
     private List<JLabel> labels = new ArrayList<>();
+    private Object[] textFieldObject, labelsObject;
     private DefaultTableModel tablaModeloCLT, tablaModelReportCliente;
     private DefaultTableModel tablaModeloPRO, tablaModelReportProv;
     private DefaultTableModel tablaModeloDpto, tablaModelCat;
@@ -124,6 +126,26 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         Button_Ventas.setEnabled(false);
         restablecerVentas();
         //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="CODIGO CONFIGURACIONES">
+        if (!role.equalsIgnoreCase("Admin")) {
+            Button_Config.setEnabled(false);
+        }
+        //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="CODIGO USUARIOS">
+        Object[] TextFieldObject = {
+            TextField_NombreUser,TextField_ApellidosUser,TextField_TelefonoUser,
+            TextField_DireccionUser,TextField_EmailUser,TextField_UsuarioUser,TextField_PasswordUser
+        };
+        Object[] LabelsObject = {
+            Label_NombreUser,Label_ApellidosUser,Label_TelefonoUser,Label_DireccionUser,
+            Label_EmailUser,Label_UsuarioUser,Label_PasswordUser,Label_RolesUser,
+            LabelImagenUser,Label_PaginasUsuarios
+        };     
+        this.textFieldObject = TextFieldObject;
+        this.labelsObject = LabelsObject;
+        //</editor-fold>
     }
 
     /**
@@ -138,7 +160,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroupProv = new javax.swing.ButtonGroup();
         PanelBanner = new javax.swing.JPanel();
-        jButton6 = new javax.swing.JButton();
+        Button_Config = new javax.swing.JButton();
         Button_Compras = new javax.swing.JButton();
         Button_Cat_Dpt = new javax.swing.JButton();
         Button_Productos = new javax.swing.JButton();
@@ -478,6 +500,53 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         TextField_BuscarProvCompras = new javax.swing.JTextField();
         jLabel46 = new javax.swing.JLabel();
         Label_ImporteCP2 = new javax.swing.JLabel();
+        jPanel27 = new javax.swing.JPanel();
+        jPanel38 = new javax.swing.JPanel();
+        jLabel32 = new javax.swing.JLabel();
+        ButtonUsuarios = new javax.swing.JButton();
+        jLabel34 = new javax.swing.JLabel();
+        jPanel39 = new javax.swing.JPanel();
+        jPanel40 = new javax.swing.JPanel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        TextField_BuscarUsuarios = new javax.swing.JTextField();
+        jPanel41 = new javax.swing.JPanel();
+        jTabbedPane3 = new javax.swing.JTabbedPane();
+        jPanel43 = new javax.swing.JPanel();
+        Label_NombreUser = new javax.swing.JLabel();
+        TextField_NombreUser = new javax.swing.JTextField();
+        Label_ApellidosUser = new javax.swing.JLabel();
+        TextField_ApellidosUser = new javax.swing.JTextField();
+        Label_TelefonoUser = new javax.swing.JLabel();
+        TextField_TelefonoUser = new javax.swing.JTextField();
+        TextField_DireccionUser = new javax.swing.JTextField();
+        Label_DireccionUser = new javax.swing.JLabel();
+        Label_EmailUser = new javax.swing.JLabel();
+        TextField_EmailUser = new javax.swing.JTextField();
+        TextField_UsuarioUser = new javax.swing.JTextField();
+        Label_UsuarioUser = new javax.swing.JLabel();
+        Label_PasswordUser = new javax.swing.JLabel();
+        TextField_PasswordUser = new javax.swing.JTextField();
+        Label_RolesUser = new javax.swing.JLabel();
+        ComboBoxRoles = new javax.swing.JComboBox<>();
+        jPanel44 = new javax.swing.JPanel();
+        jPanel45 = new javax.swing.JPanel();
+        LabelImagenUser = new javax.swing.JLabel();
+        ButtonImagenUser = new javax.swing.JButton();
+        Button_GuardarUsuarios = new javax.swing.JButton();
+        Button_CancelarUsuarios = new javax.swing.JButton();
+        jPanel42 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TableUsuarios =  TableUsuarios = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false; //Disallow the editing of any cell
+            }
+        };
+        Button_UltimoUsuarios = new javax.swing.JButton();
+        Button_SiguienteUsuarios = new javax.swing.JButton();
+        Button_AnteriorUsuarios = new javax.swing.JButton();
+        Button_PrimeroUsuarios = new javax.swing.JButton();
+        Label_PaginasUsuarios = new javax.swing.JLabel();
         Button_Proveedores = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         lblUsuario = new javax.swing.JLabel();
@@ -507,13 +576,18 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
             .addGap(0, 66, Short.MAX_VALUE)
         );
 
-        jButton6.setBackground(new java.awt.Color(0, 153, 153));
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Process-Accept.png"))); // NOI18N
-        jButton6.setText(" Config");
-        jButton6.setToolTipText("");
-        jButton6.setBorder(null);
-        jButton6.setBorderPainted(false);
+        Button_Config.setBackground(new java.awt.Color(0, 153, 153));
+        Button_Config.setForeground(new java.awt.Color(255, 255, 255));
+        Button_Config.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Process-Accept.png"))); // NOI18N
+        Button_Config.setText(" Config");
+        Button_Config.setToolTipText("");
+        Button_Config.setBorder(null);
+        Button_Config.setBorderPainted(false);
+        Button_Config.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_ConfigActionPerformed(evt);
+            }
+        });
 
         Button_Compras.setBackground(new java.awt.Color(0, 153, 153));
         Button_Compras.setForeground(new java.awt.Color(255, 255, 255));
@@ -1448,7 +1522,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(RadioButton_Activo)
                     .addComponent(RadioButton_Inactivo))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
@@ -1564,7 +1638,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Label_PaginasClientes)
                 .addGap(13, 13, 13)
@@ -2122,7 +2196,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
             jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel31Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+                .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
                 .addGap(13, 13, 13)
                 .addComponent(Label_PaginasProveedor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -2493,7 +2567,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
                 .addComponent(Label_CategoriaPDT)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ComboBox_CategoriaPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Button_GuardarProducto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Button_CancelarProducto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -2686,7 +2760,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
                 .addContainerGap()
                 .addComponent(Label)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Label_PaginasProductos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2743,15 +2817,15 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
+                .addContainerGap()
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE))
+                        .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 651, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -2920,7 +2994,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
                 .addComponent(jPanel23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 287, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Button_GuardarCatDpt, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Button_EliminarCatDpt, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2970,7 +3044,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -3080,13 +3154,13 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
+                .addContainerGap()
                 .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel16, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel24, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel15, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(6, 6, 6))
         );
 
@@ -3227,7 +3301,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
                 .addComponent(Label_ImporteCP)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Label_ImporteCP1)
-                .addContainerGap(225, Short.MAX_VALUE))
+                .addContainerGap(230, Short.MAX_VALUE))
         );
 
         TabbedPaneCompras.addTab("Productos", jPanel33);
@@ -3368,7 +3442,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
                 .addGroup(PanelReciboCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelCompraFechaRecibo)
                     .addComponent(jLabel54))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel34Layout = new javax.swing.GroupLayout(jPanel34);
@@ -3756,6 +3830,518 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
 
         jTabbedPane1.addTab("Compras", jPanel5);
 
+        jPanel27.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel38.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel38.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jPanel38.setPreferredSize(new java.awt.Dimension(1038, 56));
+
+        jLabel32.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(70, 106, 124));
+        jLabel32.setText("Opciones");
+
+        javax.swing.GroupLayout jPanel38Layout = new javax.swing.GroupLayout(jPanel38);
+        jPanel38.setLayout(jPanel38Layout);
+        jPanel38Layout.setHorizontalGroup(
+            jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel38Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(1365, Short.MAX_VALUE))
+        );
+        jPanel38Layout.setVerticalGroup(
+            jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel38Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel32)
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+
+        ButtonUsuarios.setBackground(new java.awt.Color(255, 204, 51));
+        ButtonUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-usuario-40.png"))); // NOI18N
+        ButtonUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonUsuariosActionPerformed(evt);
+            }
+        });
+
+        jLabel34.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel34.setForeground(new java.awt.Color(70, 106, 124));
+        jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel34.setText("Usuarios");
+
+        javax.swing.GroupLayout jPanel27Layout = new javax.swing.GroupLayout(jPanel27);
+        jPanel27.setLayout(jPanel27Layout);
+        jPanel27Layout.setHorizontalGroup(
+            jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel27Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel38, javax.swing.GroupLayout.DEFAULT_SIZE, 1498, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel27Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(ButtonUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel34, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel27Layout.setVerticalGroup(
+            jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel27Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel38, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(ButtonUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel34)
+                .addContainerGap(542, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Configuraciones", jPanel27);
+
+        jPanel39.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel39.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jPanel40.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel40.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jLabel35.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel35.setForeground(new java.awt.Color(70, 106, 124));
+        jLabel35.setText("Usuarios");
+
+        jLabel36.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel36.setForeground(new java.awt.Color(70, 106, 124));
+        jLabel36.setText("Buscar");
+
+        TextField_BuscarUsuarios.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TextField_BuscarUsuariosKeyReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel40Layout = new javax.swing.GroupLayout(jPanel40);
+        jPanel40.setLayout(jPanel40Layout);
+        jPanel40Layout.setHorizontalGroup(
+            jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel40Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel35)
+                .addGap(204, 204, 204)
+                .addComponent(jLabel36)
+                .addGap(18, 18, 18)
+                .addComponent(TextField_BuscarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel40Layout.setVerticalGroup(
+            jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel40Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel35)
+                    .addComponent(jLabel36)
+                    .addComponent(TextField_BuscarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jPanel41.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel41.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jTabbedPane3.setBackground(new java.awt.Color(255, 255, 255));
+        jTabbedPane3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTabbedPane3.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+
+        jPanel43.setBackground(new java.awt.Color(255, 255, 255));
+
+        Label_NombreUser.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        Label_NombreUser.setForeground(new java.awt.Color(70, 106, 124));
+        Label_NombreUser.setText("Nombre");
+
+        TextField_NombreUser.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        TextField_NombreUser.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TextField_NombreUserKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TextField_NombreUserKeyTyped(evt);
+            }
+        });
+
+        Label_ApellidosUser.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        Label_ApellidosUser.setForeground(new java.awt.Color(70, 106, 124));
+        Label_ApellidosUser.setText("Apellidos");
+
+        TextField_ApellidosUser.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        TextField_ApellidosUser.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TextField_ApellidosUserKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TextField_ApellidosUserKeyTyped(evt);
+            }
+        });
+
+        Label_TelefonoUser.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        Label_TelefonoUser.setForeground(new java.awt.Color(70, 106, 124));
+        Label_TelefonoUser.setText("Teléfono");
+
+        TextField_TelefonoUser.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        TextField_TelefonoUser.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TextField_TelefonoUserKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TextField_TelefonoUserKeyTyped(evt);
+            }
+        });
+
+        TextField_DireccionUser.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        TextField_DireccionUser.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TextField_DireccionUserKeyReleased(evt);
+            }
+        });
+
+        Label_DireccionUser.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        Label_DireccionUser.setForeground(new java.awt.Color(70, 106, 124));
+        Label_DireccionUser.setText("Dirección");
+
+        Label_EmailUser.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        Label_EmailUser.setForeground(new java.awt.Color(70, 106, 124));
+        Label_EmailUser.setText("Email");
+
+        TextField_EmailUser.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        TextField_EmailUser.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TextField_EmailUserKeyReleased(evt);
+            }
+        });
+
+        TextField_UsuarioUser.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        TextField_UsuarioUser.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TextField_UsuarioUserKeyReleased(evt);
+            }
+        });
+
+        Label_UsuarioUser.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        Label_UsuarioUser.setForeground(new java.awt.Color(70, 106, 124));
+        Label_UsuarioUser.setText("Usuario");
+
+        Label_PasswordUser.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        Label_PasswordUser.setForeground(new java.awt.Color(70, 106, 124));
+        Label_PasswordUser.setText("Contraseña");
+
+        TextField_PasswordUser.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        TextField_PasswordUser.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TextField_PasswordUserKeyReleased(evt);
+            }
+        });
+
+        Label_RolesUser.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        Label_RolesUser.setForeground(new java.awt.Color(70, 106, 124));
+        Label_RolesUser.setText("Roles");
+
+        ComboBoxRoles.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        javax.swing.GroupLayout jPanel43Layout = new javax.swing.GroupLayout(jPanel43);
+        jPanel43.setLayout(jPanel43Layout);
+        jPanel43Layout.setHorizontalGroup(
+            jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel43Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Label_NombreUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Label_ApellidosUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Label_TelefonoUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Label_DireccionUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Label_EmailUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Label_UsuarioUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Label_PasswordUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Label_RolesUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel43Layout.createSequentialGroup()
+                        .addGroup(jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TextField_TelefonoUser, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TextField_NombreUser, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TextField_ApellidosUser, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TextField_DireccionUser, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TextField_EmailUser, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TextField_UsuarioUser, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TextField_PasswordUser, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ComboBoxRoles, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 5, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel43Layout.setVerticalGroup(
+            jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel43Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(Label_NombreUser)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TextField_NombreUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(Label_ApellidosUser)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TextField_ApellidosUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(Label_TelefonoUser)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TextField_TelefonoUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(Label_DireccionUser)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TextField_DireccionUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(Label_EmailUser)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TextField_EmailUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(Label_UsuarioUser)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TextField_UsuarioUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(Label_PasswordUser)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TextField_PasswordUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(Label_RolesUser)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ComboBoxRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane3.addTab("Información", jPanel43);
+
+        jPanel44.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel45.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel45.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout jPanel45Layout = new javax.swing.GroupLayout(jPanel45);
+        jPanel45.setLayout(jPanel45Layout);
+        jPanel45Layout.setHorizontalGroup(
+            jPanel45Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel45Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(LabelImagenUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel45Layout.setVerticalGroup(
+            jPanel45Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel45Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(LabelImagenUser, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        ButtonImagenUser.setBackground(new java.awt.Color(255, 153, 0));
+        ButtonImagenUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-imagen-40.png"))); // NOI18N
+        ButtonImagenUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonImagenUserActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel44Layout = new javax.swing.GroupLayout(jPanel44);
+        jPanel44.setLayout(jPanel44Layout);
+        jPanel44Layout.setHorizontalGroup(
+            jPanel44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel44Layout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
+                .addGroup(jPanel44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(ButtonImagenUser, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                    .addComponent(jPanel45, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(35, 35, 35))
+        );
+        jPanel44Layout.setVerticalGroup(
+            jPanel44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel44Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jPanel45, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(ButtonImagenUser, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(132, Short.MAX_VALUE))
+        );
+
+        jTabbedPane3.addTab("Foto o Imagen", jPanel44);
+
+        Button_GuardarUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Agregar.png"))); // NOI18N
+        Button_GuardarUsuarios.setBorder(null);
+        Button_GuardarUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Button_GuardarUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_GuardarUsuariosActionPerformed(evt);
+            }
+        });
+
+        Button_CancelarUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Cancelar.png"))); // NOI18N
+        Button_CancelarUsuarios.setBorder(null);
+        Button_CancelarUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        javax.swing.GroupLayout jPanel41Layout = new javax.swing.GroupLayout(jPanel41);
+        jPanel41.setLayout(jPanel41Layout);
+        jPanel41Layout.setHorizontalGroup(
+            jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel41Layout.createSequentialGroup()
+                .addGroup(jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel41Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel41Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(Button_GuardarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(55, 55, 55)
+                        .addComponent(Button_CancelarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel41Layout.setVerticalGroup(
+            jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel41Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGroup(jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Button_CancelarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Button_GuardarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21))
+        );
+
+        jPanel42.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel42.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        TableUsuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        TableUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        TableUsuarios.setSelectionBackground(new java.awt.Color(102, 204, 255));
+        TableUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableUsuariosMouseClicked(evt);
+            }
+        });
+        TableUsuarios.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TableUsuariosKeyReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(TableUsuarios);
+
+        Button_UltimoUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Right-12.png"))); // NOI18N
+        Button_UltimoUsuarios.setText("Ultimo");
+        Button_UltimoUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_UltimoUsuariosActionPerformed(evt);
+            }
+        });
+
+        Button_SiguienteUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Right.png"))); // NOI18N
+        Button_SiguienteUsuarios.setText("Siguiente");
+        Button_SiguienteUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_SiguienteUsuariosActionPerformed(evt);
+            }
+        });
+
+        Button_AnteriorUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Left.png"))); // NOI18N
+        Button_AnteriorUsuarios.setText("Anterior ");
+        Button_AnteriorUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_AnteriorUsuariosActionPerformed(evt);
+            }
+        });
+
+        Button_PrimeroUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Left-12.png"))); // NOI18N
+        Button_PrimeroUsuarios.setText("Primero");
+        Button_PrimeroUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_PrimeroUsuariosActionPerformed(evt);
+            }
+        });
+
+        Label_PaginasUsuarios.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Label_PaginasUsuarios.setForeground(new java.awt.Color(70, 106, 124));
+        Label_PaginasUsuarios.setText("Page");
+
+        javax.swing.GroupLayout jPanel42Layout = new javax.swing.GroupLayout(jPanel42);
+        jPanel42.setLayout(jPanel42Layout);
+        jPanel42Layout.setHorizontalGroup(
+            jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel42Layout.createSequentialGroup()
+                .addGroup(jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel42Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1124, Short.MAX_VALUE))
+                    .addGroup(jPanel42Layout.createSequentialGroup()
+                        .addGroup(jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel42Layout.createSequentialGroup()
+                                .addGap(170, 170, 170)
+                                .addComponent(Button_PrimeroUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Button_AnteriorUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Button_SiguienteUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Button_UltimoUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel42Layout.createSequentialGroup()
+                                .addGap(376, 376, 376)
+                                .addComponent(Label_PaginasUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel42Layout.setVerticalGroup(
+            jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel42Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Label_PaginasUsuarios)
+                .addGap(13, 13, 13)
+                .addGroup(jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Button_AnteriorUsuarios)
+                    .addComponent(Button_PrimeroUsuarios)
+                    .addComponent(Button_SiguienteUsuarios)
+                    .addComponent(Button_UltimoUsuarios))
+                .addGap(23, 23, 23))
+        );
+
+        javax.swing.GroupLayout jPanel39Layout = new javax.swing.GroupLayout(jPanel39);
+        jPanel39.setLayout(jPanel39Layout);
+        jPanel39Layout.setHorizontalGroup(
+            jPanel39Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel39Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel39Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel39Layout.createSequentialGroup()
+                        .addComponent(jPanel41, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel42, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel39Layout.createSequentialGroup()
+                        .addComponent(jPanel40, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(8, 8, 8))))
+        );
+        jPanel39Layout.setVerticalGroup(
+            jPanel39Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel39Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel40, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel39Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel41, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel42, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Usuarios", jPanel39);
+
         Button_Proveedores.setBackground(new java.awt.Color(0, 153, 153));
         Button_Proveedores.setForeground(new java.awt.Color(255, 255, 255));
         Button_Proveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-proveedor-28.png"))); // NOI18N
@@ -3803,7 +4389,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Button_Compras, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Button_Config, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -3827,7 +4413,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
                     .addComponent(Button_Productos, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Button_Compras, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Button_Cat_Dpt, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Button_Config, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Button_Proveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(lblUsuario)
@@ -3851,8 +4437,10 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         cliente.numeros(TextField_IdCliente);
         if (role.equals("Admin")) {
             Button_Compras.setEnabled(true);
+            Button_Config.setEnabled(true);
         } else {
             Button_Compras.setEnabled(false);
+            Button_Config.setEnabled(false);
         }
         restablecerCliente();
 
@@ -4292,8 +4880,10 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         proveedor.numeros(TextField_IdProv);
         if (role.equals("Admin")) {
             Button_Compras.setEnabled(true);
+            Button_Config.setEnabled(true);
         } else {
             Button_Compras.setEnabled(false);
+            Button_Config.setEnabled(false);
         }
         restablecerProve();
 
@@ -4305,7 +4895,6 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         } else {
             Label_ProveedorProv.setText("Proveedor");
             Label_ProveedorProv.setForeground(new Color(0, 153, 51));
-
         }
     }//GEN-LAST:event_TextField_ProveedorProvKeyReleased
 
@@ -4756,8 +5345,10 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         Button_Cat_Dpt.setEnabled(false);
         if (role.equals("Admin")) {
             Button_Compras.setEnabled(true);
+            Button_Config.setEnabled(true);
         } else {
             Button_Compras.setEnabled(false);
+            Button_Config.setEnabled(false);
         }
 //        cliente.numeros(TextField_IdCliente);
 //        cargarDatos();
@@ -4991,7 +5582,13 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         Button_Proveedores.setEnabled(true);
         Button_Productos.setEnabled(true);
         Button_Cat_Dpt.setEnabled(true);
-        Button_Compras.setEnabled(false);
+        if (role.equals("Admin")) {
+            Button_Compras.setEnabled(false);
+            Button_Config.setEnabled(true);
+        } else {
+            Button_Compras.setEnabled(false);
+            Button_Config.setEnabled(false);
+        }
         restablecerCompras();
     }//GEN-LAST:event_Button_ComprasActionPerformed
 
@@ -5285,8 +5882,10 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         cliente.numeros(TextField_IdCliente);
         if (role.equals("Admin")) {
             Button_Compras.setEnabled(true);
+            Button_Config.setEnabled(true);
         } else {
             Button_Compras.setEnabled(false);
+            Button_Config.setEnabled(false);
         }
         restablecerProducto();
     }//GEN-LAST:event_Button_ProductosActionPerformed
@@ -5511,8 +6110,10 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
         Button_Cat_Dpt.setEnabled(true);
         if (role.equals("Admin")) {
             Button_Compras.setEnabled(true);
+            Button_Config.setEnabled(true);
         } else {
             Button_Compras.setEnabled(false);
+            Button_Config.setEnabled(false);
         }
         restablecerVentas();
     }//GEN-LAST:event_Button_VentasActionPerformed
@@ -5652,6 +6253,155 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private void Button_CancelarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_CancelarVentasActionPerformed
         restablecerVentas();
     }//GEN-LAST:event_Button_CancelarVentasActionPerformed
+// </editor-fold> 
+    
+    //<editor-fold defaultstate="collapsed" desc="CODIGO CONFIGURACIONES"> 
+    private void Button_ConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_ConfigActionPerformed
+        jTabbedPane1.setSelectedIndex(6);
+        Button_Ventas.setEnabled(true);
+        Button_Cliente.setEnabled(true);
+        Button_Proveedores.setEnabled(true);
+        Button_Productos.setEnabled(true);
+        Button_Cat_Dpt.setEnabled(true);
+        if (role.equals("Admin")) {
+            Button_Compras.setEnabled(true);
+            Button_Config.setEnabled(false);
+        } else {
+            Button_Compras.setEnabled(false);
+            Button_Config.setEnabled(false);
+        }
+    }//GEN-LAST:event_Button_ConfigActionPerformed
+// </editor-fold> 
+    
+    //<editor-fold defaultstate="collapsed" desc="CODIGO USUARIOS"> 
+    private Usuario user;
+    
+    private void ButtonUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonUsuariosActionPerformed
+        tab = 8;
+        jTabbedPane1.setSelectedIndex(7);
+        Button_Config.setEnabled(true);
+        user = new Usuario(textFieldObject, labelsObject, ComboBoxRoles, TableUsuarios);
+        user.restablecerUsuarios();
+    }//GEN-LAST:event_ButtonUsuariosActionPerformed
+
+    private void Button_GuardarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_GuardarUsuariosActionPerformed
+        if (user.registrarUsuario()) {
+            user.restablecerUsuarios();
+        }
+        
+    }//GEN-LAST:event_Button_GuardarUsuariosActionPerformed
+
+    private void TextField_NombreUserKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextField_NombreUserKeyReleased
+        if (TextField_NombreUser.getText().isEmpty()) {
+            Label_NombreUser.setForeground(new Color(70, 106, 124));
+        } else {
+            Label_NombreUser.setText("Nombre");
+            Label_NombreUser.setForeground(new Color(0, 153, 51));
+        }
+    }//GEN-LAST:event_TextField_NombreUserKeyReleased
+
+    private void TextField_NombreUserKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextField_NombreUserKeyTyped
+        evento.textKeyPress(evt);
+    }//GEN-LAST:event_TextField_NombreUserKeyTyped
+
+    private void TextField_ApellidosUserKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextField_ApellidosUserKeyReleased
+        if (TextField_ApellidosUser.getText().isEmpty()) {
+            Label_ApellidosUser.setForeground(new Color(70, 106, 124));
+        } else {
+            Label_ApellidosUser.setText("Apellidos");
+            Label_ApellidosUser.setForeground(new Color(0, 153, 51));
+        }
+    }//GEN-LAST:event_TextField_ApellidosUserKeyReleased
+
+    private void TextField_ApellidosUserKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextField_ApellidosUserKeyTyped
+        evento.textKeyPress(evt);
+    }//GEN-LAST:event_TextField_ApellidosUserKeyTyped
+
+    private void TextField_TelefonoUserKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextField_TelefonoUserKeyReleased
+        if (TextField_TelefonoUser.getText().isEmpty()) {
+            Label_TelefonoUser.setForeground(new Color(70, 106, 124));
+        } else {
+            Label_TelefonoUser.setText("Teléfono");
+            Label_TelefonoUser.setForeground(new Color(0, 153, 51));
+        }
+    }//GEN-LAST:event_TextField_TelefonoUserKeyReleased
+
+    private void TextField_TelefonoUserKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextField_TelefonoUserKeyTyped
+        evento.numberKeyPress(evt);
+    }//GEN-LAST:event_TextField_TelefonoUserKeyTyped
+
+    private void TextField_DireccionUserKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextField_DireccionUserKeyReleased
+        if (TextField_DireccionUser.getText().isEmpty()) {
+            Label_DireccionUser.setForeground(new Color(70, 106, 124));
+        } else {
+            Label_DireccionUser.setText("Dirección");
+            Label_DireccionUser.setForeground(new Color(0, 153, 51));
+        }
+    }//GEN-LAST:event_TextField_DireccionUserKeyReleased
+
+    private void TextField_EmailUserKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextField_EmailUserKeyReleased
+        if (TextField_EmailUser.getText().isEmpty()) {
+            Label_EmailUser.setForeground(new Color(70, 106, 124));
+        } else {
+            Label_EmailUser.setText("Email");
+            Label_EmailUser.setForeground(new Color(0, 153, 51));
+        }
+    }//GEN-LAST:event_TextField_EmailUserKeyReleased
+
+    private void TextField_UsuarioUserKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextField_UsuarioUserKeyReleased
+        if (TextField_UsuarioUser.getText().isEmpty()) {
+            Label_UsuarioUser.setForeground(new Color(70, 106, 124));
+        } else {
+            Label_UsuarioUser.setText("Usuario");
+            Label_UsuarioUser.setForeground(new Color(0, 153, 51));
+        }
+    }//GEN-LAST:event_TextField_UsuarioUserKeyReleased
+
+    private void TextField_PasswordUserKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextField_PasswordUserKeyReleased
+        if (TextField_PasswordUser.getText().isEmpty()) {
+            Label_PasswordUser.setForeground(new Color(70, 106, 124));
+        } else {
+            Label_PasswordUser.setText("Contraseña");
+            Label_PasswordUser.setForeground(new Color(0, 153, 51));
+        }
+    }//GEN-LAST:event_TextField_PasswordUserKeyReleased
+
+    private void TableUsuariosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TableUsuariosKeyReleased
+        if (TableUsuarios.getSelectedRows().length > 0) {
+            user.dataTableUsuarios();
+        }
+    }//GEN-LAST:event_TableUsuariosKeyReleased
+
+    private void TableUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableUsuariosMouseClicked
+        if (TableUsuarios.getSelectedRows().length > 0) {
+            user.dataTableUsuarios();
+        }
+    }//GEN-LAST:event_TableUsuariosMouseClicked
+
+    private void ButtonImagenUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonImagenUserActionPerformed
+        usuarios.cargarImagen(LabelImagenUser, true, null);
+    }//GEN-LAST:event_ButtonImagenUserActionPerformed
+
+    private void Button_UltimoUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_UltimoUsuariosActionPerformed
+        new Paginador(tab, TableUsuarios, Label_PaginasUsuarios, 0).ultimo();
+    }//GEN-LAST:event_Button_UltimoUsuariosActionPerformed
+
+    private void Button_SiguienteUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_SiguienteUsuariosActionPerformed
+        new Paginador(tab, TableUsuarios, Label_PaginasUsuarios, 0).siguiente();
+    }//GEN-LAST:event_Button_SiguienteUsuariosActionPerformed
+
+    private void Button_AnteriorUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_AnteriorUsuariosActionPerformed
+        new Paginador(tab, TableUsuarios, Label_PaginasUsuarios, 0).anterior();
+    }//GEN-LAST:event_Button_AnteriorUsuariosActionPerformed
+
+    private void Button_PrimeroUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_PrimeroUsuariosActionPerformed
+        new Paginador(tab, TableUsuarios, Label_PaginasUsuarios, 1).primero();
+    }//GEN-LAST:event_Button_PrimeroUsuariosActionPerformed
+
+    private void TextField_BuscarUsuariosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextField_BuscarUsuariosKeyReleased
+        user.searchUsuario(TableUsuarios, TextField_BuscarUsuarios.getText(),
+                num_registro, pageSize);
+    }//GEN-LAST:event_TextField_BuscarUsuariosKeyReleased
 
     // </editor-fold> 
     /**
@@ -5691,22 +6441,27 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ButtonBuscarProductoVentas;
+    private javax.swing.JButton ButtonImagenUser;
+    private javax.swing.JButton ButtonUsuarios;
     private javax.swing.JButton Button_ActDesac;
     private javax.swing.JButton Button_ActDesacProv;
     private javax.swing.JButton Button_AnteriorCLT;
     private javax.swing.JButton Button_AnteriorCompras;
     private javax.swing.JButton Button_AnteriorPRO;
     private javax.swing.JButton Button_AnteriorProducto;
+    private javax.swing.JButton Button_AnteriorUsuarios;
     private javax.swing.JButton Button_AnteriorVentas;
     private javax.swing.JButton Button_CancelarCLT;
     private javax.swing.JButton Button_CancelarCatDpt;
     private javax.swing.JButton Button_CancelarCompras;
     private javax.swing.JButton Button_CancelarProducto;
     private javax.swing.JButton Button_CancelarProv;
+    private javax.swing.JButton Button_CancelarUsuarios;
     private javax.swing.JButton Button_CancelarVentas;
     private javax.swing.JButton Button_Cat_Dpt;
     private javax.swing.JButton Button_Cliente;
     private javax.swing.JButton Button_Compras;
+    private javax.swing.JButton Button_Config;
     private javax.swing.JButton Button_EliminarCatDpt;
     private javax.swing.JButton Button_EliminarCompras;
     private javax.swing.JButton Button_FacturaCliente;
@@ -5717,11 +6472,13 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JButton Button_GuardarCompras;
     private javax.swing.JButton Button_GuardarProducto;
     private javax.swing.JButton Button_GuardarProv;
+    private javax.swing.JButton Button_GuardarUsuarios;
     private javax.swing.JButton Button_GuardarVentas;
     private javax.swing.JButton Button_PrimeroCLT;
     private javax.swing.JButton Button_PrimeroCompras;
     private javax.swing.JButton Button_PrimeroPRO;
     private javax.swing.JButton Button_PrimeroProducto;
+    private javax.swing.JButton Button_PrimeroUsuarios;
     private javax.swing.JButton Button_PrimeroVentas;
     private javax.swing.JButton Button_Productos;
     private javax.swing.JButton Button_Proveedores;
@@ -5729,15 +6486,18 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JButton Button_SiguienteCompras;
     private javax.swing.JButton Button_SiguientePRO;
     private javax.swing.JButton Button_SiguienteProducto;
+    private javax.swing.JButton Button_SiguienteUsuarios;
     private javax.swing.JButton Button_SiguienteVentas;
     private javax.swing.JButton Button_UltimoCLT;
     private javax.swing.JButton Button_UltimoCompras;
     private javax.swing.JButton Button_UltimoPRO;
     private javax.swing.JButton Button_UltimoProducto;
+    private javax.swing.JButton Button_UltimoUsuarios;
     private javax.swing.JButton Button_UltimoVentas;
     private javax.swing.JButton Button_Ventas;
     private javax.swing.JCheckBox CheckBoxCompraCredito;
     private javax.swing.JCheckBox CheckBoxVentas;
+    private javax.swing.JComboBox<String> ComboBoxRoles;
     private javax.swing.JComboBox ComboBox_CategoriaPro;
     private javax.swing.JComboBox ComboBox_DepartamentoPro;
     private javax.swing.JLabel Label;
@@ -5756,6 +6516,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JLabel LabelDeudaRecProv;
     private javax.swing.JLabel LabelFechaRecCliente;
     private javax.swing.JLabel LabelFechaRecProv;
+    private javax.swing.JLabel LabelImagenUser;
     private javax.swing.JLabel LabelMensajeVentasCliente;
     private javax.swing.JLabel LabelNomRecCliente;
     private javax.swing.JLabel LabelProductoCod;
@@ -5767,6 +6528,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JLabel Label_ApellidoCliente;
     private javax.swing.JLabel Label_ApellidoCliente1;
     private javax.swing.JLabel Label_ApellidoCliente2;
+    private javax.swing.JLabel Label_ApellidosUser;
     private javax.swing.JLabel Label_CantidadCP;
     private javax.swing.JLabel Label_Cat;
     private javax.swing.JLabel Label_CategoriaPDT;
@@ -5779,9 +6541,11 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JLabel Label_DeudaTotalReciboVentas;
     private javax.swing.JLabel Label_DireccionCliente;
     private javax.swing.JLabel Label_DireccionProv;
+    private javax.swing.JLabel Label_DireccionUser;
     private javax.swing.JLabel Label_Dpt;
     private javax.swing.JLabel Label_EmailCliente;
     private javax.swing.JLabel Label_EmailProv;
+    private javax.swing.JLabel Label_EmailUser;
     private javax.swing.JLabel Label_EstadoProv;
     private javax.swing.JLabel Label_FechaReciboVentas;
     private javax.swing.JLabel Label_IdCliente;
@@ -5795,18 +6559,22 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JLabel Label_MontoPagarVentas;
     private javax.swing.JLabel Label_NombreCliente;
     private javax.swing.JLabel Label_NombreReciboVentas;
+    private javax.swing.JLabel Label_NombreUser;
     private javax.swing.JLabel Label_PaginasClientes;
     private javax.swing.JLabel Label_PaginasCompra;
     private javax.swing.JLabel Label_PaginasProductos;
     private javax.swing.JLabel Label_PaginasProveedor;
+    private javax.swing.JLabel Label_PaginasUsuarios;
     private javax.swing.JLabel Label_PaginasVentas;
     private javax.swing.JLabel Label_PagoCliente;
     private javax.swing.JLabel Label_PagoCliente1;
     private javax.swing.JLabel Label_PagoProv;
     private javax.swing.JLabel Label_PagoVenta;
+    private javax.swing.JLabel Label_PasswordUser;
     private javax.swing.JLabel Label_PrecioCP;
     private javax.swing.JLabel Label_PrecioVentaProducto;
     private javax.swing.JLabel Label_ProveedorProv;
+    private javax.swing.JLabel Label_RolesUser;
     private javax.swing.JLabel Label_SuCambio;
     private javax.swing.JLabel Label_SuCambio1;
     private javax.swing.JLabel Label_SuCambio2;
@@ -5814,7 +6582,9 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JLabel Label_TelefonoCliente2;
     private javax.swing.JLabel Label_TelefonoCliente3;
     private javax.swing.JLabel Label_TelefonoProv;
+    private javax.swing.JLabel Label_TelefonoUser;
     private javax.swing.JLabel Label_UltimoPagoReciboVentas;
+    private javax.swing.JLabel Label_UsuarioUser;
     private javax.swing.JPanel PanelBanner;
     private javax.swing.JPanel PanelCodeProducto;
     private javax.swing.JPanel PanelReciboCompra;
@@ -5830,6 +6600,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JRadioButton RadioButton_PagosCliente;
     private javax.swing.JRadioButton RadioButton_PagosPro;
     private javax.swing.JTabbedPane TabbedPaneCompras;
+    private javax.swing.JTable TableUsuarios;
     private javax.swing.JTable Table_Cat;
     private javax.swing.JTable Table_Clientes;
     private javax.swing.JTable Table_Compras;
@@ -5844,6 +6615,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JTable Table_VentasTempo;
     private javax.swing.JTextField TextFieldBuscarProductos;
     private javax.swing.JTextField TextField_ApellidoCliente;
+    private javax.swing.JTextField TextField_ApellidosUser;
     private javax.swing.JTextField TextField_BuscarCliente;
     private javax.swing.JTextField TextField_BuscarCliente2;
     private javax.swing.JTextField TextField_BuscarCompras;
@@ -5851,6 +6623,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JTextField TextField_BuscarProductosVentas;
     private javax.swing.JTextField TextField_BuscarProvCompras;
     private javax.swing.JTextField TextField_BuscarProveedor;
+    private javax.swing.JTextField TextField_BuscarUsuarios;
     private javax.swing.JTextField TextField_CantidadCP;
     private javax.swing.JTextField TextField_Categoria;
     private javax.swing.JTextField TextField_ComprasPagos;
@@ -5859,22 +6632,27 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JTextField TextField_DescripcionPDT;
     private javax.swing.JTextField TextField_DireccionCliente;
     private javax.swing.JTextField TextField_DireccionProv;
+    private javax.swing.JTextField TextField_DireccionUser;
     private javax.swing.JTextField TextField_EmailCliente;
     private javax.swing.JTextField TextField_EmailProv;
+    private javax.swing.JTextField TextField_EmailUser;
     private javax.swing.JTextField TextField_IdCliente;
     private javax.swing.JTextField TextField_IdProv;
     private javax.swing.JTextField TextField_NombreCliente;
+    private javax.swing.JTextField TextField_NombreUser;
     private javax.swing.JTextField TextField_PagoConVentas;
     private javax.swing.JTextField TextField_PagosCliente;
     private javax.swing.JTextField TextField_PagosProv;
+    private javax.swing.JTextField TextField_PasswordUser;
     private javax.swing.JTextField TextField_PrecioCP;
     private javax.swing.JTextField TextField_PrecioVentaPDT;
     private javax.swing.JTextField TextField_ProveedorProv;
     private javax.swing.JTextField TextField_TelefonoCliente;
     private javax.swing.JTextField TextField_TelefonoProv;
+    private javax.swing.JTextField TextField_TelefonoUser;
+    private javax.swing.JTextField TextField_UsuarioUser;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroupProv;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -5900,7 +6678,11 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
@@ -5954,6 +6736,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JPanel jPanel24;
     private javax.swing.JPanel jPanel25;
     private javax.swing.JPanel jPanel26;
+    private javax.swing.JPanel jPanel27;
     private javax.swing.JPanel jPanel28;
     private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
@@ -5965,12 +6748,21 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JPanel jPanel35;
     private javax.swing.JPanel jPanel36;
     private javax.swing.JPanel jPanel37;
+    private javax.swing.JPanel jPanel38;
+    private javax.swing.JPanel jPanel39;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel40;
+    private javax.swing.JPanel jPanel41;
+    private javax.swing.JPanel jPanel42;
+    private javax.swing.JPanel jPanel43;
+    private javax.swing.JPanel jPanel44;
+    private javax.swing.JPanel jPanel45;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
@@ -5985,6 +6777,7 @@ public class Sistema extends javax.swing.JFrame implements IClassModels {
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JLabel lblCaja;
     private javax.swing.JLabel lblMensajeVenta;
     private javax.swing.JLabel lblUsuario;

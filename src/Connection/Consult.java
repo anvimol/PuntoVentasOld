@@ -251,4 +251,14 @@ public class Consult extends Conexion {
         }
         return tempoVentas;
     }
+    
+    public List<Roles> roles() {
+        try {
+            roles = (List<Roles>) QR.query(getConn(), "SELECT * FROM roles",
+                    new BeanListHandler(Roles.class));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex);
+        }
+        return roles;
+    }
 }

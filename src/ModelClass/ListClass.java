@@ -6,6 +6,8 @@
 package ModelClass;
 
 import Clases.FormatDecimal;
+import Clases.TextFieldEvent;
+import Clases.UploadImage;
 import Models.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,8 @@ import net.sourceforge.jbarcodebean.JBarcodeBean;
 public class ListClass {
     public FormatDecimal formato = new FormatDecimal();
     public JBarcodeBean barcode = new JBarcodeBean(); 
+    public TextFieldEvent evento = new TextFieldEvent();
+    public UploadImage imagen = new UploadImage();
     
     public List<Clientes> numCliente = new ArrayList();
     public List<Proveedores> numProveedor = new ArrayList();
@@ -37,4 +41,5 @@ public class ListClass {
     public List<Tempo_ventas> tempoVentas = new ArrayList();
     public List<Cajas_ingresos> cajaIngresoInicial = new ArrayList();
     public List<Cajas_ingresos> cajaIngresoVenta = new ArrayList();
+    public List<Roles> roles = new ArrayList();
 }

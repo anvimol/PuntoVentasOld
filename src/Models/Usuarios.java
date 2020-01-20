@@ -19,6 +19,7 @@ public class Usuarios {
     private String usuario;
     private String password;
     private String role;
+    private String imagen;
 
     public Usuarios() {
     }
@@ -93,6 +94,14 @@ public class Usuarios {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
     
     
