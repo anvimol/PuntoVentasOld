@@ -42,4 +42,5 @@ public class ListClass {
     public List<Cajas_ingresos> cajaIngresoInicial = new ArrayList();
     public List<Cajas_ingresos> cajaIngresoVenta = new ArrayList();
     public List<Roles> roles = new ArrayList();
+    public List<Cajas_registros> cajasRegistro = new ArrayList();
 }

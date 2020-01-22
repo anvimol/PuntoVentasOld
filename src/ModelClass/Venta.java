@@ -29,7 +29,7 @@ public class Venta extends Consult {
     private String sql;
     private Object[] object;
     private DefaultTableModel modelo1, modelo2;
-    private double importe = 0, totalPagar = 0, ingresosTotales = 0;
+    private double importe = 0, totalPagar = 0, ingresosTotales = 0, ingresosInicial = 0;
     private boolean suCambio = false, verificar = false;
     private int caja, idUsuario;
 
@@ -46,7 +46,7 @@ public class Venta extends Consult {
 
     public void saveVentasTempo(String codigo, int funcion) {
         String importe, precios;
-        int idTempo, cantidad = 1, existencia;
+        int cantidad = 1, existencia;
         double descuento, precio, importes;
 
         tempoVentas = tempoVentas().stream()
@@ -333,10 +333,11 @@ public class Venta extends Consult {
                 && t.getType().equals("Inicial") && t.getFecha().equals(new Calendario().getFecha()))
                 .collect(Collectors.toList());
         if (0 < cajaIngresoInicial.size()) {
-            String data = cajaIngresoInicial.get(0).getIngreso();
-            label1.setText(data);
+            cajaIngresoInicial.forEach(item -> {
+                ingresosTotales += formato.reconstruir(item.getIngreso().replace("€", ""));
+            });
+            label1.setText(formato.decimal(ingresosTotales) + "€");
             label1.setForeground(new Color(70, 106, 124));
-            ingresosTotales = formato.reconstruir(data.replace("€", ""));
         } else {
             label1.setText("0,00€");
             label1.setForeground(Color.RED);
@@ -479,7 +480,6 @@ public class Venta extends Consult {
             }
             valor = true;
             if (suCambio) {
-                double ingresosInicial = 0;
                 cajaIngresoInicial = cajasIngresos().stream()
                         .filter(t -> t.getCaja() == caja && t.getIdUsuario() == idUsuario
                         && t.getType().equals("Inicial") && t.getFecha().equals(new Calendario().getFecha()))
@@ -487,8 +487,10 @@ public class Venta extends Consult {
                 if (cajaIngresoInicial.isEmpty()) {
                     valor = ingresosVentas(labels);
                 } else {
-                    String ingreso = cajaIngresoInicial.get(0).getIngreso().replace("€", "");
-                    ingresosInicial = formato.reconstruir(ingreso);
+                    cajaIngresoInicial.forEach(item -> {
+                        ingresosInicial += formato.reconstruir(item.getIngreso().replace("€", ""));
+                    });
+                    
                     if (0 < ingresosInicial) {
                         if (ingresosInicial > totalPagar || ingresosInicial == totalPagar) {
                             ingresosInicial -= totalPagar;

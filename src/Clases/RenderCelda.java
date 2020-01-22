@@ -50,6 +50,17 @@ public class RenderCelda extends DefaultTableCellRenderer {
                     cell.setForeground(Color.BLACK);
                 }
                 break;
+            case 8:
+                if (column == 2) {
+                    if (cell.getText().equals("Activa")) {
+                        cell.setForeground(Color.RED);
+                    } else {
+                        cell.setForeground(new Color(0, 153, 102));
+                    }
+                } else {
+                    cell.setForeground(Color.BLACK);
+                }
+                break;
         }
         return cell;
     }

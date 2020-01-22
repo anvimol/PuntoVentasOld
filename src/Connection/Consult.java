@@ -261,4 +261,14 @@ public class Consult extends Conexion {
         }
         return roles;
     }
+    
+    public List<Cajas_registros> cajasRegistros() {
+        try {
+            cajasRegistro = (List<Cajas_registros>) QR.query(getConn(), "SELECT * FROM cajas_registros",
+                    new BeanListHandler(Cajas_registros.class));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex);
+        }
+        return cajasRegistro;
+    }
 }
