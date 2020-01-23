@@ -18,9 +18,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class RenderCelda extends DefaultTableCellRenderer {
     
     private int colum;
+    private int valor;
     
-    public RenderCelda(int colum) {
+    public RenderCelda(int colum, int valor) {
         this.colum = colum;
+        this.valor = valor;
     }
     
     public Component getTableCellRendererComponent(JTable table, Object value,
@@ -53,6 +55,17 @@ public class RenderCelda extends DefaultTableCellRenderer {
             case 8:
                 if (column == 2) {
                     if (cell.getText().equals("Activa")) {
+                        cell.setForeground(Color.RED);
+                    } else {
+                        cell.setForeground(new Color(0, 153, 102));
+                    }
+                } else {
+                    cell.setForeground(Color.BLACK);
+                }
+                break;
+            case 9:
+                if (column == 3) {
+                    if (valor >= Integer.valueOf(cell.getText())) {
                         cell.setForeground(Color.RED);
                     } else {
                         cell.setForeground(new Color(0, 153, 102));

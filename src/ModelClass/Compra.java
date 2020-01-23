@@ -95,7 +95,7 @@ public class Compra extends Consult {
         table.getColumnModel().getColumn(0).setMaxWidth(0);
         table.getColumnModel().getColumn(0).setMinWidth(0);
         table.getColumnModel().getColumn(0).setPreferredWidth(0);
-        table.setDefaultRenderer(Object.class, new RenderCelda(4));
+        table.setDefaultRenderer(Object.class, new RenderCelda(4,0));
     }
 
     public DefaultTableModel getModelo() {

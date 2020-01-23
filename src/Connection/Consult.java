@@ -271,4 +271,18 @@ public class Consult extends Conexion {
         }
         return cajasRegistro;
     }
+    
+    public List<Productos> getBodega() {
+        String condicion = " bodegas.producto_id = productos.idProducto";
+        String campos = "productos.producto,bodegas.id,bodegas.producto_id,"
+                + "bodegas.codigo,bodegas.existencia,bodegas.fecha";
+        try {
+            productos = (List<Productos>) QR.query(getConn(),
+                    "SELECT " + campos + " FROM bodegas INNER JOIN productos ON"
+                    + condicion, new BeanListHandler(Productos.class));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex);
+        }
+        return productos;
+    }
 }

@@ -22,6 +22,7 @@ public class ListClass {
     public JBarcodeBean barcode = new JBarcodeBean(); 
     public TextFieldEvent evento = new TextFieldEvent();
     public UploadImage imagen = new UploadImage();
+    public static Inventario inventario;
     
     public List<Clientes> numCliente = new ArrayList();
     public List<Proveedores> numProveedor = new ArrayList();

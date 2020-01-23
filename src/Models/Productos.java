@@ -10,7 +10,7 @@ package Models;
  *
  * @author avice
  */
-public class Productos {
+public class Productos extends Bodegas {
     private int idProducto;
     private String codigo;
     private String producto;
@@ -30,10 +30,12 @@ public class Productos {
         this.idProducto = idProducto;
     }
 
+    @Override
     public String getCodigo() {
         return codigo;
     }
 
+    @Override
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }

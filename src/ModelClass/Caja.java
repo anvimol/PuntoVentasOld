@@ -291,7 +291,7 @@ public class Caja extends Consult {
         table2.getColumnModel().getColumn(0).setMaxWidth(0);
         table2.getColumnModel().getColumn(0).setMinWidth(0);
         table2.getColumnModel().getColumn(0).setPreferredWidth(0);
-        table2.setDefaultRenderer(Object.class, new RenderCelda(8));
+        table2.setDefaultRenderer(Object.class, new RenderCelda(8,0));
     }
 
     public void registrarCajas() {

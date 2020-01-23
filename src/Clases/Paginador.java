@@ -95,6 +95,16 @@ public class Paginador extends ListClass implements IClassModels {
                 usuarios.searchUsuario(table, "", num_registro, pageSize);
                 maxReg = usuarios.getUsuarios().size();
                 break;
+            case 9:
+                if (fun == 1) {
+                    num_registro = 0;
+                    numPagi = 1;
+                    boton = 0;
+                }
+                //listUsuario = usuarios.getUsuarios();
+                inventario.getBodegas("", num_registro, pageSize);
+                maxReg = inventario.getInventBodega().size();
+                break;
         }
         pageCount = (maxReg / pageSize);
         // Ajuste el número de la página si la ultima página contiene una parte de la página
@@ -126,6 +136,9 @@ public class Paginador extends ListClass implements IClassModels {
                 break;
             case 8:
                 usuarios.searchUsuario(table, "", numPagi, pageSize);
+                break;
+            case 9:
+                inventario.getBodegas("", numPagi, pageSize);
                 break;
         }
 
@@ -162,6 +175,9 @@ public class Paginador extends ListClass implements IClassModels {
                     break;
                 case 8:
                     usuarios.searchUsuario(table, "", num_registro, pageSize);
+                    break;
+                case 9:
+                    inventario.getBodegas("", num_registro, pageSize);
                     break;
             }
             boton = 2;
@@ -201,6 +217,9 @@ public class Paginador extends ListClass implements IClassModels {
                     case 8:
                         usuarios.searchUsuario(table, "", num_registro, pageSize);
                         break;
+                    case 9:
+                        inventario.getBodegas("", num_registro, pageSize);
+                        break;
                 }
                 numPagi += 1;
                 label.setText("Página " + String.valueOf(numPagi) + "/"
@@ -236,6 +255,9 @@ public class Paginador extends ListClass implements IClassModels {
                 break;
             case 8:
                 usuarios.searchUsuario(table, "", num_registro, pageSize);
+                break;
+            case 9:
+                inventario.getBodegas("", num_registro, pageSize);
                 break;
         }
         numPagi = pageCount;

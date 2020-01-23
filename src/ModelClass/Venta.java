@@ -138,7 +138,7 @@ public class Venta extends Consult {
         table.getColumnModel().getColumn(0).setMaxWidth(0);
         table.getColumnModel().getColumn(0).setMinWidth(0);
         table.getColumnModel().getColumn(0).setPreferredWidth(0);
-        table.setDefaultRenderer(Object.class, new RenderCelda(0));
+        table.setDefaultRenderer(Object.class, new RenderCelda(0,0));
 
     }
 
@@ -275,7 +275,7 @@ public class Venta extends Consult {
         table.getColumnModel().getColumn(0).setMaxWidth(0);
         table.getColumnModel().getColumn(0).setMinWidth(0);
         table.getColumnModel().getColumn(0).setPreferredWidth(0);
-        table.setDefaultRenderer(Object.class, new RenderCelda(1));
+        table.setDefaultRenderer(Object.class, new RenderCelda(1,0));
     }
 
     public void dataCliente(JCheckBox checkBox, JTextField txtPagos,
