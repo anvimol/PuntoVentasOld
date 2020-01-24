@@ -8,6 +8,7 @@ package ModelClass;
 import Clases.Paginador;
 import Clases.RenderCelda;
 import Connection.Consult;
+import Models.Bodegas;
 import Models.Productos;
 import java.awt.Color;
 import java.util.List;
@@ -46,11 +47,13 @@ public class Inventario extends Consult {
         spinnerBodega = (JSpinner) objectBodega[1];
         checkBoxBodega = (JCheckBox) objectBodega[2];
         tabbedPane = (JTabbedPane) objectBodega[3];
+        table2 = (JTable) objectBodega[4];
     }
 
     public Inventario() {
     }
 
+    // BODEGA
     public void getBodegas(String campo, int num_registro, int reg_por_pagina) {
         String[] titulos = {"Id", "Código", "Producto", "Existencia", "Fecha"};
         modelo1 = new DefaultTableModel(null, titulos);
@@ -119,7 +122,13 @@ public class Inventario extends Consult {
                 textFieldBodega.get(0).setText("");
                 new Paginador(9, table, labelBodega.get(1), 1).primero();
                 break;
-
+            case 1:
+                textFieldBodega.get(1).setText("");
+                textFieldBodega.get(2).setText("");
+                labelBodega.get(2).setText("Lista de Productos");
+                labelBodega.get(2).setForeground(new Color(70, 106, 124));
+                getProductos("", 0, pageSize);
+                break;
         }
 
     }
@@ -143,8 +152,99 @@ public class Inventario extends Consult {
             update(sql, object);
         }
     }
-    
+
     public List<Productos> getInventBodega() {
         return getBodega();
+    }
+
+    // PRODUCTOS
+    public void getProductos(String campo, int num_registro, int reg_por_pagina) {
+        String[] titulos = {"Id", "Código", "Producto", "Precio", "Descuento",
+            "Departamento", "Categoria"};
+        modelo2 = new DefaultTableModel(null, titulos);
+
+        if (0 < productos().size()) {
+            if (campo.isEmpty()) {
+                productos = productos().stream()
+                        .skip(num_registro).limit(reg_por_pagina)
+                        .collect(Collectors.toList());
+            } else {
+                productos = productos().stream()
+                        .filter(p -> p.getCodigo().startsWith(campo)
+                        || p.getProducto().startsWith(campo))
+                        .skip(num_registro).limit(reg_por_pagina)
+                        .collect(Collectors.toList());
+            }
+            productos.forEach(item -> {
+                String[] registros = {
+                    String.valueOf(item.getIdProducto()),
+                    item.getCodigo(),
+                    item.getProducto(),
+                    item.getPrecio(),
+                    item.getDescuento(),
+                    item.getDepartamento(),
+                    item.getCategoria()
+                };
+                modelo2.addRow(registros);
+            });
+            table2.setModel(modelo2);
+            table2.setRowHeight(30);
+            table2.getColumnModel().getColumn(0).setMaxWidth(0);
+            table2.getColumnModel().getColumn(0).setMinWidth(0);
+            table2.getColumnModel().getColumn(0).setPreferredWidth(0);
+            table2.setDefaultRenderer(Object.class, new RenderCelda(10, 0));
+        }
+    }
+
+    public void dateTableProductos() {
+        int fila = table2.getSelectedRow();
+        idRegistro = Integer.valueOf((String) modelo2.getValueAt(fila, 0));
+    }
+
+    public void updateProductos() {
+        String precio, descuento;
+        if (idRegistro != 0) {
+            productos = productos().stream()
+                    .filter(p -> p.getIdProducto() == idRegistro)
+                    .collect(Collectors.toList());
+            if (0 < productos.size()) {
+                List<Bodegas> bodega = bodegas().stream()
+                        .filter(b -> b.getCodigo().equals(productos.get(0).getCodigo()))
+                        .collect(Collectors.toList());
+                if (bodega.isEmpty()) {
+                    labelBodega.get(2).setText("Producto no disponible");
+                    labelBodega.get(2).setForeground(Color.RED);
+                } else {
+                    if (0 == bodega.get(0).getExistencia()) {
+                        labelBodega.get(2).setText("Producto no disponible");
+                        labelBodega.get(2).setForeground(Color.RED);
+                    } else {
+                        if (textFieldBodega.get(1).getText().equals("")) {
+                            precio = productos.get(0).getPrecio();
+                        } else {
+                            double data = formato.reconstruir(textFieldBodega.get(1).getText());
+                            precio = formato.decimal(data) + "€";
+                        }
+                        if (textFieldBodega.get(2).getText().equals("")) {
+                            descuento = productos.get(0).getDescuento();
+                        } else {
+                            double data = formato.reconstruir(textFieldBodega.get(2).getText());
+                            descuento = formato.decimal(data) + "%";
+                        }
+                        sql = "UPDATE productos SET precio=?, descuento=? "
+                                + "WHERE idProducto=" + idRegistro;
+                        object = new Object[] {
+                            precio,
+                            descuento
+                        };
+                        update(sql, object);
+                        restablecerBodega();
+                    }
+                }
+            }
+        } else {
+            labelBodega.get(2).setText("Seleccione un producto");
+            labelBodega.get(2).setForeground(Color.RED);
+        }
     }
 }

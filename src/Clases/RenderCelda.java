@@ -5,8 +5,12 @@
  */
 package Clases;
 
+import Connection.Consult;
+import Models.Bodegas;
 import java.awt.Color;
 import java.awt.Component;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -16,18 +20,21 @@ import javax.swing.table.DefaultTableCellRenderer;
  * @author avice
  */
 public class RenderCelda extends DefaultTableCellRenderer {
-    
+
     private int colum;
     private int valor;
-    
+    private Consult consult;
+    private String codigo;
+
     public RenderCelda(int colum, int valor) {
         this.colum = colum;
         this.valor = valor;
+        consult = new Consult();
     }
-    
+
     public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {
-        
+
         JLabel cell = (JLabel) super.getTableCellRendererComponent(table, value,
                 isSelected, hasFocus, row, column);
         switch (colum) {
@@ -74,8 +81,33 @@ public class RenderCelda extends DefaultTableCellRenderer {
                     cell.setForeground(Color.BLACK);
                 }
                 break;
+            case 10:
+                if (column == 3 || column == 4) {
+                    cell.setForeground(new Color(0, 153, 102));
+                } else {
+                    if (column == 1) {
+                        codigo = cell.getText();
+                    }
+                    if (column == 2) {
+                        List<Bodegas> bodega = consult.bodegas().stream()
+                                .filter(b -> b.getCodigo().equals(codigo))
+                                .collect(Collectors.toList());
+                        if (bodega.isEmpty()) {
+                            cell.setForeground(Color.RED);
+                        } else {
+                            if (0 == bodega.get(0).getExistencia()) {
+                                cell.setForeground(Color.RED);
+                            } else {
+                                cell.setForeground(new Color(0, 153, 102));
+                            }
+                        }
+                    } else {
+                        cell.setForeground(Color.BLACK);
+                    }
+                }
+                break;
         }
         return cell;
     }
-    
+
 }
