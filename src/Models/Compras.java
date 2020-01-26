@@ -24,6 +24,7 @@ public class Compras {
     private String mes;
     private String year;
     private String fecha;
+    private String codigo;
 
     public Compras() {
     }
@@ -138,6 +139,14 @@ public class Compras {
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
     
     

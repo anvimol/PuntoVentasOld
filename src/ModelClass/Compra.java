@@ -13,6 +13,7 @@ import Models.*;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -27,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
 public class Compra extends Consult {
 
     //private List<Tempo_compras> tempoComprasFilter;
-    private String sql;
+    private String sql, codeBarra, codigoCompra;
     private Object[] object;
     //private FormatDecimal formato = new FormatDecimal();
     private DefaultTableModel modelo1, modelo2;
@@ -328,12 +329,13 @@ public class Compra extends Consult {
             int idUsuario, String role) {
         int count1, count2, ini, idRegistro;
         sql = "INSERT INTO compras(producto,cantidad,precio,importe,idProveedor,"
-                + "proveedor,idUsuario,usuario,role,dia,mes,year,fecha)"
-                + " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                + "proveedor,idUsuario,usuario,role,dia,mes,year,fecha,codigo)"
+                + " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         numTempoCompras = tempoCompras().stream()
                 .collect(Collectors.toList());
         if (!numTempoCompras.isEmpty()) {
             numTempoCompras.forEach(item -> {
+                codigoCompra = codeCompra(item.getDescripcion(), item.getPrecioCompra());
                 object = new Object[]{
                     item.getDescripcion(),
                     item.getCantidad(),
@@ -347,7 +349,9 @@ public class Compra extends Consult {
                     new Calendario().getDia(),
                     new Calendario().getMes(),
                     new Calendario().getAnyo(),
-                    new Calendario().getFecha(),};
+                    new Calendario().getFecha(),
+                    codigoCompra
+                };
                 insert(sql, object);
             });
             count1 = numTempoCompras.size();
@@ -385,4 +389,27 @@ public class Compra extends Consult {
             }
         }
     }
+    
+    public String codeCompra(String producto, String precio){
+        int codigo, count;
+        compras = compras().stream()
+                .filter(p -> p.getProducto().equals(producto)&& p.getPrecio().equals(precio)
+                        && p.getYear().equals(new Calendario().getAnyo()))
+                .collect(Collectors.toList());
+        if (0 < compras.size()) {
+            codeBarra = compras.get(0).getCodigo();
+        }else{
+            do{
+                codigo = ThreadLocalRandom.current().nextInt(100000, 1000000000 + 1);
+                codeBarra = String.valueOf(codigo);
+                compras = compras().stream()
+                        .filter(c -> c.getCodigo().equals(codeBarra)
+                        && c.getYear().equals(new Calendario().getAnyo()))
+                        .collect(Collectors.toList());
+                count = compras.size();
+            }while (count > 0);
+        }
+        return codeBarra;
+    }
+
 }

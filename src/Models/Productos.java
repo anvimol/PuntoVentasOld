@@ -18,6 +18,9 @@ public class Productos extends Bodegas {
     private String descuento;
     private String departamento;
     private String categoria;
+    private String year;
+    private String fecha;
+    private String compra;
 
     public Productos() {
     }
@@ -78,6 +81,30 @@ public class Productos extends Bodegas {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getCompra() {
+        return compra;
+    }
+
+    public void setCompra(String compra) {
+        this.compra = compra;
     }
     
     

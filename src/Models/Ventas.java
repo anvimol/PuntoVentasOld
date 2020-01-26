@@ -22,6 +22,7 @@ public class Ventas {
     private String fecha;
     private int caja;
     private int idUsuario;
+    private String compra;
 
     public Ventas() {
     }
@@ -120,6 +121,14 @@ public class Ventas {
 
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public String getCompra() {
+        return compra;
+    }
+
+    public void setCompra(String compra) {
+        this.compra = compra;
     }
     
     

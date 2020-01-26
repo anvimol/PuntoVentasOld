@@ -40,9 +40,9 @@ public class Producto extends Consult {
     private Categorias cat = null;
 
     public void getProductos(JTable table, String campo) {
-        String[] registros = new String[7];
+        String[] registros = new String[8];
         String[] titulos = {"Id", "Producto", "Cantidad", "Precio", "Importe",
-            "Proveedor", "Fecha"};
+            "Proveedor", "Fecha", "Código"};
         modelo1 = new DefaultTableModel(null, titulos);
         if (campo.isEmpty()) {
             tempo_productos = tempoProductos().stream()
@@ -61,6 +61,7 @@ public class Producto extends Consult {
             registros[4] = item.getImporte();
             registros[5] = item.getProveedor();
             registros[6] = item.getFecha();
+            registros[7] = item.getCodigo();
             modelo1.addRow(registros);
         });
         table.setModel(modelo1);
@@ -68,7 +69,7 @@ public class Producto extends Consult {
         table.getColumnModel().getColumn(0).setMaxWidth(0);
         table.getColumnModel().getColumn(0).setMinWidth(0);
         table.getColumnModel().getColumn(0).setPreferredWidth(0);
-        table.setDefaultRenderer(Object.class, new RenderCelda(4,0));
+        table.setDefaultRenderer(Object.class, new RenderCelda(4, 0));
     }
 
     public DefaultTableModel getModelo() {
@@ -162,10 +163,12 @@ public class Producto extends Consult {
             modelCombo = new DefaultComboBoxModel();
         }
         return dpt;
+        
     }
 
     public Categorias getCategorias(JComboBox combo1, JComboBox combo2,
             int idDptos, String categori) {
+        modelCombo = new DefaultComboBoxModel();
         if (idDptos == 0) {
             Departamentos dpt = (Departamentos) combo1.getSelectedItem();
             idDpto = dpt.getIdDpto();
@@ -189,8 +192,9 @@ public class Producto extends Consult {
     }
 
     public void saveProducto(String producto, int cantidad, String precio,
-            String departamento, String categoria, String accion, int idProducto) {
-        int count = 0, cant;
+            String departamento, String categoria, String accion,
+            int idProducto, String codigo) {
+        int count, cant;
         double precio1 = formato.reconstruir(precio);
         switch (accion) {
             case "insert":
@@ -200,14 +204,18 @@ public class Producto extends Consult {
                         .collect(Collectors.toList());
                 if (productos.isEmpty()) {
                     sql = "INSERT INTO productos(codigo,producto,precio,descuento,"
-                            + "departamento,categoria) VALUES(?,?,?,?,?,?)";
+                            + "departamento,categoria,year,fecha,compra) "
+                            + "VALUES(?,?,?,?,?,?,?,?,?)";
                     object = new Object[]{
                         codeBarra,
                         producto,
                         formato.decimal(precio1) + "€",
                         "0,00%",
                         departamento,
-                        categoria
+                        categoria,
+                        new Calendario().getAnyo(),
+                        new Calendario().getFecha(),
+                        codigo
                     };
                     insert(sql, object);
                 }
@@ -301,17 +309,17 @@ public class Producto extends Consult {
         table.getColumnModel().getColumn(0).setMaxWidth(0);
         table.getColumnModel().getColumn(0).setMinWidth(0);
         table.getColumnModel().getColumn(0).setPreferredWidth(0);
-        table.setDefaultRenderer(Object.class, new RenderCelda(4,0));
+        table.setDefaultRenderer(Object.class, new RenderCelda(4, 0));
     }
 
     public DefaultTableModel getModelo2() {
         return modelo2;
     }
-    
+
     public List<Productos> producto() {
         return productos();
     }
-    
+
     public void deleteProducto(int idProd) {
         sql = "DELETE FROM tempo_productos WHERE compra_id LIKE ?";
         delete(sql, idProd);

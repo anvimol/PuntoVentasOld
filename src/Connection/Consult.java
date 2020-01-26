@@ -211,7 +211,7 @@ public class Consult extends Conexion {
         String condicion = " tempo_productos.compra_id = compras.idCompra "; 
         String campos = "tempo_productos.compra_id,compras.idCompra,compras.producto,"
                 + "compras.cantidad,compras.precio,compras.importe,compras.proveedor,"
-                + "compras.fecha";
+                + "compras.fecha,compras.codigo";
         try {
             tempo_productos = (List<Tempo_productos>) QR.query(getConn(),
                     "SELECT " + campos + " FROM tempo_productos INNER JOIN compras ON"

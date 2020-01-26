@@ -194,6 +194,16 @@ public class Venta extends Consult {
             }
         }
     }
+    
+    public void deleteVentas(int idVenta) {
+        if (0 < idVenta) {
+            sql = "DELETE FROM tempo_ventas WHERE idVenta LIKE ?";
+            delete(sql, idVenta);
+        } else {
+            sql = "DELETE FROM tempo_ventas";
+            delete(sql, 0);
+        }
+    }
 
     public void pagosCliente(JTextField textField, JLabel label1, JLabel label2,
             JLabel label3, JCheckBox checkBox) {
@@ -409,8 +419,11 @@ public class Venta extends Consult {
                 .collect(Collectors.toList());
         if (!tempoVentas.isEmpty()) {
             sql = "INSERT INTO ventas(codigo,descripcion,precio,cantidad,importe,"
-                    + "dia,mes,year,fecha,caja,idUsuario) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+                    + "dia,mes,year,fecha,caja,idUsuario,compra) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
             tempoVentas.forEach(item -> {
+                productos = productos().stream()
+                        .filter(p -> p.getCodigo().equals(item.getCodigo()))
+                        .collect(Collectors.toList());
                 object = new Object[]{
                     item.getCodigo(),
                     item.getDescripcion(),
@@ -422,7 +435,8 @@ public class Venta extends Consult {
                     new Calendario().getAnyo(),
                     new Calendario().getFecha(),
                     caja,
-                    idUsuario
+                    idUsuario,
+                    productos.get(0).getCompra()
                 };
                 insert(sql, object);
             });
