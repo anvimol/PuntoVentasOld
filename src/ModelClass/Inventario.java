@@ -10,11 +10,24 @@ import Clases.RenderCelda;
 import Connection.Consult;
 import Models.Bodegas;
 import Models.Productos;
+import Models.Ventas;
+import datechooser.beans.DateChooserCombo;
 import java.awt.Color;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -33,14 +46,18 @@ public class Inventario extends Consult {
     private Object[] object;
     private List<JLabel> labelBodega;
     private List<JTextField> textFieldBodega;
-    private static DefaultTableModel modelo1, modelo2;
-    private JTable table, table2;
+    private static DefaultTableModel modelo1, modelo2, modelo3;
+    private JTable table, table2, table3;
     private JSpinner spinnerBodega;
-    private JCheckBox checkBoxBodega;
+    private JCheckBox checkBoxBodega, checkBoxMasVendidos;
     private SpinnerNumberModel model;
     private JTabbedPane tabbedPane;
+    private DateChooserCombo dateChooserInicio, dateChooserFinal;
+    private final SimpleDateFormat formateador;
 
     public Inventario(Object[] objectBodega, List<JLabel> labelBodega, List<JTextField> textFieldBodega) {
+        this.formateador = new SimpleDateFormat("dd/MM/yyyy");
+        
         this.labelBodega = labelBodega;
         this.textFieldBodega = textFieldBodega;
         table = (JTable) objectBodega[0];
@@ -48,9 +65,14 @@ public class Inventario extends Consult {
         checkBoxBodega = (JCheckBox) objectBodega[2];
         tabbedPane = (JTabbedPane) objectBodega[3];
         table2 = (JTable) objectBodega[4];
+        dateChooserInicio = (DateChooserCombo) objectBodega[5];
+        dateChooserFinal = (DateChooserCombo) objectBodega[6];
+        checkBoxMasVendidos = (JCheckBox) objectBodega[7];
+        table3 = (JTable) objectBodega[8];
     }
 
     public Inventario() {
+        this.formateador = new SimpleDateFormat("dd/MM/yyyy");
     }
 
     // BODEGA
@@ -127,7 +149,17 @@ public class Inventario extends Consult {
                 textFieldBodega.get(2).setText("");
                 labelBodega.get(2).setText("Lista de Productos");
                 labelBodega.get(2).setForeground(new Color(70, 106, 124));
+                labelBodega.get(4).setForeground(new Color(70, 106, 124));
+                labelBodega.get(5).setForeground(new Color(70, 106, 124));
                 getProductos("", 0, pageSize);
+                new Paginador(10, table2, labelBodega.get(3), 1).primero();
+                break;
+            case 2:
+                Calendar c = new GregorianCalendar();
+                dateChooserInicio.setSelectedDate(c);
+                dateChooserFinal.setSelectedDate(c);
+                searchVentas("", 0, pageSize);
+                new Paginador(11, table3, labelBodega.get(6), 1).primero();
                 break;
         }
 
@@ -233,7 +265,7 @@ public class Inventario extends Consult {
                         }
                         sql = "UPDATE productos SET precio=?, descuento=? "
                                 + "WHERE idProducto=" + idRegistro;
-                        object = new Object[] {
+                        object = new Object[]{
                             precio,
                             descuento
                         };
@@ -246,5 +278,169 @@ public class Inventario extends Consult {
             labelBodega.get(2).setText("Seleccione un producto");
             labelBodega.get(2).setForeground(Color.RED);
         }
+    }
+
+    // VENTAS
+    public int searchVentas(String campo, int num_registro, int reg_por_pagina) {
+        String[] titulos = {"Id", "Código", "Descripción", "Precio", "Cantidad",
+            "Importe", "Dia", "Mes", "Año", "Fecha", "Caja"};
+        modelo3 = new DefaultTableModel(null, titulos);
+        List<Ventas> query = new ArrayList<>();
+        int valor = 0;
+        try {
+            String fechaInicio = dateChooserInicio.getSelectedPeriodSet().toString(); // dateChooserInicio.getSelectedPeriodSet().toString();
+            
+            Date fechaDate1 = formateador.parse(fechaInicio);
+            Date fechaDate2 = formateador.parse(dateChooserFinal.getSelectedPeriodSet().toString());
+            if (campo.isEmpty()) {
+                if (checkBoxMasVendidos.isSelected()) {
+                    if (fechaDate2.before(fechaDate1)) { // before = menor
+                        JOptionPane.showMessageDialog(null, "La fecha final debe ser"
+                                + " mayor a la fecha de incio", "Error",
+                                JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        query = maxVentas(filtrarProductosFechas(fechaInicio));
+                        valor = query.size();
+                    }
+                } else {
+                    if (fechaDate2.before(fechaDate1)) { // before = menor
+                        JOptionPane.showMessageDialog(null, "La fecha final debe ser"
+                                + " mayor a la fecha de incio", "Error",
+                                JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        query = filtrarProductosFechas(fechaInicio);
+                        valor = query.size();
+                    }
+                }
+            } else {
+                if (checkBoxMasVendidos.isSelected()) {
+                    if (fechaDate2.before(fechaDate1)) { // before = menor
+                        JOptionPane.showMessageDialog(null, "La fecha final debe ser"
+                                + " mayor a la fecha de incio", "Error",
+                                JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        query = maxVentas(filtrarProductosFechas(fechaInicio)).stream()
+                                .filter(p -> p.getCodigo().startsWith(campo)
+                                || p.getDescripcion().startsWith(campo))
+                                .skip(num_registro).limit(reg_por_pagina)
+                                .collect(Collectors.toList());
+                        valor = query.size();
+                    }
+                } else {
+                    if (fechaDate2.before(fechaDate1)) { // before = menor
+                        JOptionPane.showMessageDialog(null, "La fecha final debe ser"
+                                + " mayor a la fecha de incio", "Error",
+                                JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        query = filtrarProductosFechas(fechaInicio).stream()
+                                .filter(p -> p.getCodigo().startsWith(campo)
+                                || p.getDescripcion().startsWith(campo))
+                                .skip(num_registro).limit(reg_por_pagina)
+                                .collect(Collectors.toList());
+                        valor = query.size();
+                    }
+                }
+            }
+        } catch (Exception e) {
+        }
+        query.forEach(item -> {
+            Object[] registros = {
+                item.getIdVenta(),
+                item.getCodigo(),
+                item.getDescripcion(),
+                item.getPrecio(),
+                item.getCantidad(),
+                item.getImporte(),
+                item.getDia(),
+                item.getMes(),
+                item.getYear(),
+                item.getFecha()
+            };
+            modelo3.addRow(registros);
+        });
+        table3.setModel(modelo3);
+        table3.setRowHeight(30);
+        table3.getColumnModel().getColumn(0).setMaxWidth(0);
+        table3.getColumnModel().getColumn(0).setMinWidth(0);
+        table3.getColumnModel().getColumn(0).setPreferredWidth(0);
+        return valor;
+    }
+
+    private List<Ventas> maxVentas(List<Ventas> query) {
+        List<Ventas> listProduct = new ArrayList<>();
+        for (Ventas item : query) {
+            if (verificar(item, listProduct)) {
+                listProduct.add(item);
+            }
+        }
+        // ORDENAR DE MENOR A MAYOR
+        listProduct.sort((v1, v2) -> Integer.valueOf(v1.getCantidad()).compareTo(v2.getCantidad()));
+        // MAYOR A MENOR
+        Collections.reverse(listProduct);
+        return listProduct;
+    }
+
+    private boolean verificar(Ventas data, List<Ventas> listProduct) {
+        int pos = 0, cant;
+        double importe1, importe2, importe3;
+        for (Ventas item : listProduct) {
+            if (item.getCodigo().equals(data.getCodigo())) {
+                importe1 = formato.reconstruir(item.getImporte().replace("€", ""));
+                importe2 = formato.reconstruir(data.getImporte().replace("€", ""));
+                importe3 = importe1 + importe2;
+                String importes = formato.decimal(importe3) + "€";
+                cant = item.getCantidad() + data.getCantidad();
+                listProduct.remove(pos);
+                item.setCantidad(cant);
+                item.setImporte(importes);
+                listProduct.add(pos, item);
+                return false;
+            }
+            pos++;
+            cant = 0;
+        }
+        return true;
+    }
+
+    private List<Ventas> filtrarProductosFechas(String fechaInicio) {
+        List<Ventas> listProduct = new ArrayList<>();
+        try {
+            Ventas venta = new Ventas();
+            Date fechaDate1 = formateador.parse(dateChooserInicio.getSelectedPeriodSet().toString());
+            Date fechaDate2 = formateador.parse(dateChooserFinal.getSelectedPeriodSet().toString());
+            List<Ventas> listdb1 = ventas().stream()
+                    .filter(b -> b.getFecha().equals(fechaInicio))
+                    .collect(Collectors.toList());
+            if (0 < listdb1.size()) {
+                List<Ventas> listdb2 = ventas().stream()
+                        .filter(b -> b.getIdVenta() >= listdb1.get(0).getIdVenta())
+                        .collect(Collectors.toList());
+                for (Ventas item : listdb2) {
+                    Date fechaDate3 = formateador.parse(item.getFecha());
+                    if (fechaDate3.before(fechaDate2)
+                            || 0 == fechaDate2.compareTo(fechaDate1)) { // compareTo devuelve 0 se las fechas son iguales
+                        venta.setIdVenta(item.getIdVenta());
+                        venta.setCodigo(item.getCodigo());
+                        venta.setDescripcion(item.getDescripcion());
+                        venta.setPrecio(item.getPrecio());
+                        venta.setCantidad(item.getCantidad());
+                        venta.setImporte(item.getImporte());
+                        venta.setDia(item.getDia());
+                        venta.setMes(item.getMes());
+                        venta.setYear(item.getYear());
+                        venta.setFecha(item.getFecha());
+                        venta.setCaja(item.getCaja());
+                        venta.setIdUsuario(item.getIdUsuario());
+                        listProduct.add(venta);
+                        venta = new Ventas();
+                    } else {
+                        break;
+                    }
+                }
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listProduct;
     }
 }

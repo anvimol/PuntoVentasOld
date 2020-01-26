@@ -285,4 +285,14 @@ public class Consult extends Conexion {
         }
         return productos;
     }
+    public List<Ventas> ventas() {
+        try {
+            ventas = (List<Ventas>) QR.query(getConn(), "SELECT * FROM ventas",
+                    new BeanListHandler(Ventas.class));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex);
+        }
+        return ventas;
+    }
+    
 }

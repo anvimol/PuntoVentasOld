@@ -119,6 +119,7 @@ public class ExportData extends JFrame {
                 Paragraph subPara = new Paragraph("Realizado por @anvimol", subcategoryFont);
                 Section subCatPart = catPart.addSection(subPara);
                 subCatPart.add(new Paragraph("Lista de Productos"));
+                subCatPart.add(new Paragraph("\n"));
                 // Creamos la tabla
                 PdfPTable table = new PdfPTable(titles.length);
                 // Llenamos las filas de Table

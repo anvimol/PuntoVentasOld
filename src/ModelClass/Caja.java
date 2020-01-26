@@ -103,10 +103,10 @@ public class Caja extends Consult {
 
     public void getIngresos() {
         fechaInicio = dateChooserCombo.getSelectedPeriodSet().toString();
-        String[] parts = fechaInicio.split("/");
-        int dia = Integer.valueOf(parts[0]);
-        int mes = Integer.valueOf(parts[1]);
-        fechaInicio = dia + "/" + mes + "/" + parts[2];
+//        String[] parts = fechaInicio.split("/");
+//        int dia = Integer.valueOf(parts[0]);
+//        int mes = Integer.valueOf(parts[1]);
+//        fechaInicio = dia + "/" + mes + "/" + parts[2];
 
         String[] registros = new String[5];
         String[] titulos = {"Id", "Caja", "Ingreso", "Tipo", "Fecha"};

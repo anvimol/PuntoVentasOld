@@ -115,6 +115,15 @@ public class Paginador extends ListClass implements IClassModels {
                 inventario.getProductos("", num_registro, pageSize);
                 maxReg = producto.producto().size();
                 break;
+//            case 11:
+//                if (fun == 1) {
+//                    num_registro = 0;
+//                    numPagi = 1;
+//                    boton = 0;
+//                }
+//
+//                maxReg = inventario.searchVentas("", num_registro, pageSize);
+//                break;
         }
         pageCount = (maxReg / pageSize);
         // Ajuste el número de la página si la ultima página contiene una parte de la página
@@ -153,6 +162,9 @@ public class Paginador extends ListClass implements IClassModels {
             case 10:
                 inventario.getProductos("", numPagi, pageSize);
                 break;
+//            case 11:
+//                inventario.searchVentas("", numPagi, pageSize);
+//                break;
         }
 
         boton = 1;
@@ -195,6 +207,9 @@ public class Paginador extends ListClass implements IClassModels {
                 case 10:
                     inventario.getProductos("", num_registro, pageSize);
                     break;
+//                case 11:
+//                    inventario.searchVentas("", num_registro, pageSize);
+//                    break;
             }
             boton = 2;
         }
@@ -239,6 +254,9 @@ public class Paginador extends ListClass implements IClassModels {
                     case 10:
                         inventario.getProductos("", num_registro, pageSize);
                         break;
+//                    case 11:
+//                        inventario.searchVentas("", num_registro, pageSize);
+//                        break;
                 }
                 numPagi += 1;
                 label.setText("Página " + String.valueOf(numPagi) + "/"
@@ -281,6 +299,9 @@ public class Paginador extends ListClass implements IClassModels {
             case 10:
                 inventario.getProductos("", num_registro, pageSize);
                 break;
+//            case 11:
+//                inventario.searchVentas("", num_registro, pageSize);
+//                break;
         }
         numPagi = pageCount;
         boton = 4;
